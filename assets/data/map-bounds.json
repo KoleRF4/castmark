@@ -1,0 +1,20 @@
+{
+  "mosquito_lake": { "xMin": 30, "xMax": 112, "yNorth": 115, "ySouth": 33 },
+  "elk_lake": { "xMin": 38, "xMax": 162, "yNorth": 162, "ySouth": 38 },
+  "winding_rivulet": { "xMin": 45, "xMax": 143, "yNorth": 151, "ySouth": 53 },
+  "old_burg_lake": { "xMin": -1, "xMax": 81, "yNorth": 83, "ySouth": -1 },
+  "belaya_river": { "xMin": -1, "xMax": 114, "yNorth": 107, "ySouth": -9 },
+  "kuori_lake": { "xMin": 53, "xMax": 149, "yNorth": 149, "ySouth": 53 },
+  "bear_lake": { "xMin": 5, "xMax": 95, "yNorth": 93, "ySouth": 3 },
+  "volkhov_river": { "xMin": -8, "xMax": 210, "yNorth": 208, "ySouth": -10 },
+  "seversky_donets_river": { "xMin": 5, "xMax": 196, "yNorth": 195, "ySouth": 4 },
+  "sura_river": { "xMin": -5, "xMax": 163, "yNorth": 165, "ySouth": -2 },
+  "ladoga_lake": { "xMin": 5, "xMax": 102, "yNorth": 95, "ySouth": 0 },
+  "the_amber_lake": { "xMin": -1, "xMax": 194, "yNorth": 213, "ySouth": 18 },
+  "ladoga_archipelago": { "xMin": -26, "xMax": 625, "yNorth": 625, "ySouth": -26 },
+  "akhtuba_river": { "xMin": -7, "xMax": 208, "yNorth": 207, "ySouth": -10 },
+  "copper_lake": { "xMin": 24, "xMax": 78, "yNorth": 77, "ySouth": 23 },
+  "lower_tunguska_river": { "xMin": -11, "xMax": 251, "yNorth": 251, "ySouth": -10 },
+  "yama_river": { "xMin": -12, "xMax": 310, "yNorth": 311, "ySouth": -12 },
+  "norwegian_sea": { "xMin": -42, "xMax": 1037, "yNorth": 1037, "ySouth": -47 }
+}
