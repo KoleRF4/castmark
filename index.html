@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Castmark Share</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <style>
+    body.share-page {
+      background: var(--bg);
+      overflow: auto;
+    }
+
+    #overlay.share-overlay {
+      min-height: 100%;
+      padding: 28px 18px 40px;
+      overflow: auto;
+    }
+
+    .share-shell {
+      width: min(760px, 100%);
+      margin: 0 auto;
+      display: grid;
+      gap: 16px;
+    }
+
+    .share-hero {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .share-hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(420px 200px at 85% -10%, color-mix(in srgb, var(--accent-glow-soft) 72%, transparent) 0%, transparent 70%),
+        radial-gradient(360px 200px at 10% 110%, color-mix(in srgb, var(--accent-glow-soft) 55%, transparent) 0%, transparent 72%);
+      pointer-events: none;
+      opacity: 0.9;
+    }
+
+    .share-hero-body {
+      display: grid;
+      gap: 10px;
+    }
+
+    .share-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .share-logo {
+      height: 42px;
+      width: auto;
+      filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.35));
+    }
+
+    .share-title {
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+      color: var(--text);
+    }
+
+    .share-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+      max-width: 540px;
+    }
+
+    .share-card .ui-card-body {
+      display: grid;
+      gap: 12px;
+    }
+
+    .share-code {
+      font-family: Consolas, "Segoe UI", monospace;
+      letter-spacing: 0.01em;
+      min-height: 140px;
+      resize: none;
+    }
+
+    .share-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .share-status {
+      min-height: 16px;
+    }
+
+    .share-empty {
+      color: var(--text-dim);
+    }
+
+    .share-steps {
+      display: grid;
+      gap: 6px;
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+
+    .share-footer {
+      text-align: center;
+      color: var(--text-dim);
+      font-size: 11px;
+    }
+
+    @media (max-width: 640px) {
+      .share-brand {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .share-logo {
+        height: 36px;
+      }
+      .share-title {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body data-theme="default" class="share-page">
+  <div id="overlay" class="share-overlay">
+    <div class="share-shell">
+      <section class="ui-card share-hero">
+        <div class="ui-card-body share-hero-body">
+          <div class="share-brand">
+            <img src="../assets/img/logo-castmark.svg" alt="RF4 Castmark" class="share-logo">
+            <div>
+              <div class="share-title">Castmark Share</div>
+              <div class="share-subtitle">Copy a share code for RF4 Castmark. The code lives in the URL hash and never touches a server.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="ui-card share-card">
+        <div class="ui-card-header">Share Code</div>
+        <div class="ui-card-body">
+          <div id="share-empty" class="share-empty">
+            No share code detected. Open a Castmark share link that ends with <strong>#share=...</strong>.
+          </div>
+          <textarea id="share-code" class="ui-textarea share-code" readonly></textarea>
+          <div class="share-actions">
+            <button id="copy-code" class="ui-btn ui-btn--success" type="button">Copy for Castmark</button>
+            <button id="copy-url" class="ui-btn ui-btn--surface" type="button">Copy Share URL</button>
+          </div>
+          <div id="share-status" class="ui-help share-status"></div>
+        </div>
+      </section>
+
+      <section class="ui-card">
+        <div class="ui-card-header">Import Steps</div>
+        <div class="ui-card-body share-steps">
+          <div>1. Open Castmark and go to Settings -> Maps & Spots.</div>
+          <div>2. Click "Share Code (Paste)".</div>
+          <div>3. Paste the code and import.</div>
+        </div>
+      </section>
+
+      <div class="share-footer">RF4 Castmark is an independent tool and is not affiliated with Russian Fishing 4.</div>
+    </div>
+  </div>
+
+  <script>
+    const SHARE_PREFIX = "RF4CM1:";
+    const codeEl = document.getElementById("share-code");
+    const emptyEl = document.getElementById("share-empty");
+    const copyCodeBtn = document.getElementById("copy-code");
+    const copyUrlBtn = document.getElementById("copy-url");
+    const statusEl = document.getElementById("share-status");
+
+    const setStatus = (message = "") => {
+      if (!statusEl) return;
+      statusEl.textContent = message;
+      if (!message) return;
+      setTimeout(() => {
+        if (statusEl.textContent === message) statusEl.textContent = "";
+      }, 2200);
+    };
+
+    const extractShareCode = (text) => {
+      const raw = String(text || "").trim();
+      if (!raw) return "";
+      const direct = raw.match(/RF4CM1:[A-Za-z0-9_-]+/);
+      if (direct && direct[0]) return direct[0];
+      const shareMatch = raw.match(/[?#&]share=([^&]+)/i);
+      if (!shareMatch || !shareMatch[1]) return "";
+      let decoded = "";
+      try {
+        decoded = decodeURIComponent(shareMatch[1]);
+      } catch {
+        decoded = shareMatch[1];
+      }
+      return decoded.startsWith(SHARE_PREFIX) ? decoded : "";
+    };
+
+    const getBaseUrl = () => {
+      let path = window.location.pathname || "/";
+      path = path.replace(/index\.html$/i, "");
+      if (!path.endsWith("/")) path += "/";
+      return `${window.location.origin}${path}`;
+    };
+
+    const buildShareUrl = (code) => {
+      if (!code) return "";
+      return `${getBaseUrl()}#share=${encodeURIComponent(code)}`;
+    };
+
+    const copyText = async (text) => {
+      if (!text) return false;
+      try {
+        await navigator.clipboard.writeText(text);
+        return true;
+      } catch {
+        const temp = document.createElement("textarea");
+        temp.value = text;
+        document.body.appendChild(temp);
+        temp.select();
+        try {
+          document.execCommand("copy");
+          temp.remove();
+          return true;
+        } catch {
+          temp.remove();
+          return false;
+        }
+      }
+    };
+
+    const applyShareCode = (code) => {
+      const hasCode = !!code;
+      if (codeEl) {
+        codeEl.value = code || "";
+        codeEl.disabled = !hasCode;
+      }
+      if (emptyEl) emptyEl.style.display = hasCode ? "none" : "block";
+      if (copyCodeBtn) copyCodeBtn.disabled = !hasCode;
+      if (copyUrlBtn) copyUrlBtn.disabled = !hasCode;
+    };
+
+    const code = extractShareCode(window.location.href);
+    applyShareCode(code);
+
+    if (codeEl) {
+      codeEl.addEventListener("click", () => {
+        codeEl.select();
+      });
+    }
+
+    if (copyCodeBtn) {
+      copyCodeBtn.addEventListener("click", async () => {
+        const ok = await copyText(codeEl?.value || "");
+        setStatus(ok ? "Share code copied." : "Copy failed.");
+      });
+    }
+
+    if (copyUrlBtn) {
+      copyUrlBtn.addEventListener("click", async () => {
+        const url = buildShareUrl(codeEl?.value || "");
+        const ok = await copyText(url);
+        setStatus(ok ? "Share URL copied." : "Copy failed.");
+      });
+    }
+  </script>
+</body>
+</html>
