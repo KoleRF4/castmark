@@ -1,78 +1,102 @@
 # RF4 Castmark
 
-**RF4 Castmark** is a lightweight desktop overlay companion for **Russian Fishing 4**.  
-It helps you track maps, spots, trophies, and recipes while playing.
+**RF4 Castmark** is a desktop companion for **Russian Fishing 4** focused on practical fishing intel: map spots, tackle notes, trophies, recipes, public sharing, and moderation workflows.
 
-Built for players who want practical, organized fishing intel.
+Built for players who want fast, organized, in-session decision support.
 
 ---
 
-## Features
+## Highlights (v1.0.0)
 
-- Overlay map viewer for in-session reference
-- Save and manage fishing spots by coordinate
-- Tackle-aware spot notes and metadata
-- Trophy tracking with local progress persistence
-- Recipe tracking for Groundbait and PVA workflows
-- Waterbodies tab with species and trophy-card focus tools
-- Always-on-top overlay behavior
-- Fast and lightweight desktop runtime
+- Full Maps workflow with tackle-aware saved/public spot notes
+- Public share pipeline (submit, approve/reject, vote, report, delete)
+- Duplicate-share protection and stricter share validation
+- Waterbodies progression tools and trophy-focused tracking
+- Recipes system (Groundbait + PVA) with improved UX
+- Rich smart tooltips (fish, baits, items, rigs, hooks, recipes, spots)
+- Local item market + bait intelligence support
+- Resources Hub with in-app guides and utility pages
+- Fish Finder mini-tool (challenge/random target helper)
+- Sticky Notes panel for persistent local notes
+- Theme/UI consistency pass across major views
+
+---
+
+## Core Features
+
+- Overlay-friendly desktop runtime
+- Coordinate-based spot logging and management
+- Tackle-specific spot metadata (method, bait/lure, depth, rig/hook context)
+- Trophy and progress tracking
+- Recipe tracking and quick sharing workflows
+- Public community spot browsing with voting
+- Local-first persistence for personal data
+- Built-in quality-of-life tools and guides
 
 ---
 
 ## Development Status
 
-**Version:** `v0.5.0`  
-This is an actively developed release.
+**Version:** `v1.0.0`  
+Actively maintained.
 
 You should expect:
-- Ongoing feature additions
-- Iterative UI and UX improvements
-- Occasional schema or behavior changes between versions
+- Frequent QoL updates
+- Continued UI/UX polish
+- Ongoing data/model improvements for tooltip intelligence
 
-Feedback is encouraged and helps prioritize updates.
+Feedback directly influences priority.
 
 ---
 
 ## Download
 
-Go to the **Releases** page and download the latest Windows build:
+Get the latest Windows build from **Releases**:
 
 - `RF4 Castmark Setup.exe` (installer)
 - `RF4 Castmark.exe` (portable)
 
-Windows may show a SmartScreen warning because the app is unsigned.  
-Select:
+If Windows SmartScreen appears:
 
 > **More info -> Run anyway**
 
-This is common for independent desktop applications.
+This is common for unsigned independent desktop apps.
 
 ---
 
-## Why It Is Safe
+## Safety
 
-RF4 Castmark is designed as a reference overlay, not a gameplay automation tool.
+RF4 Castmark is a reference companion, not automation.
 
-- Does **not** modify Russian Fishing 4 files
-- Does **not** inject into the game process
-- Does **not** automate gameplay inputs or actions
-- Does **not** require account credentials
-- Stores user data locally on your machine
+- Does **not** modify RF4 files
+- Does **not** inject into game process memory
+- Does **not** automate gameplay inputs/actions
+- Does **not** require RF4 account credentials
+- Stores personal app data locally on your machine
 
-Use official release links only when downloading builds.
+Download from official release links only.
 
 ---
 
-## How to Use
+## Quick Start
 
 1. Launch **Russian Fishing 4**
-2. Start **RF4 Castmark**
-3. Open the overlay and select a map or tab
-4. Save spots, review trophies, and manage recipes while playing
-5. Use `F8` to hide/show the overlay
+2. Launch **RF4 Castmark**
+3. Pick a map/tab and start logging spots or reviewing intel
+4. Use sharing, recipes, trophies, and resources while playing
+5. Toggle overlay visibility with your configured shortcut
 
-Your saved data is stored locally.
+---
+
+## Public Sharing & Moderation
+
+RF4 Castmark includes a public sharing system with moderation controls:
+
+- Public spot submission and browsing
+- Vote and report flow
+- Pending/approved/rejected lifecycle
+- Admin moderation panel support
+- Duplicate and validation safeguards
 
 ---
 
@@ -80,24 +104,20 @@ Your saved data is stored locally.
 
 RF4 Castmark is an independent project and is **not affiliated** with Russian Fishing 4 or its publishers.
 
-Use this tool at your own risk.  
-It is intended for personal reference and convenience.
+Use at your own risk.  
+Intended for personal reference and convenience.
 
 ---
 
-## Bug Reports and Suggestions
+## Bug Reports / Feature Requests
 
-If you find a bug or want to request a feature:
+Use the **Issues** tab and include:
 
-1. Open the **Issues** tab
-2. Create a new issue
-3. Include:
 - Steps to reproduce
-- Actual result
-- Expected result
+- Expected behavior
+- Actual behavior
 - App version
-
-Screenshots or short clips are helpful.
+- Screenshot/clip (if possible)
 
 ---
 
@@ -109,16 +129,14 @@ Screenshots or short clips are helpful.
 
 ## Credits
 
-Created by **Kole S**.
-
-Thanks to testers and contributors for feedback and validation.
+Created by **Kole S**.  
+Thanks to testers, moderators, and community contributors.
 
 ---
 
 ## Roadmap
 
-- Continued Waterbodies improvements
-- More quality-of-life filters and quick actions
-- Additional import/export and backup tooling
-- Further UI consistency and component cleanup
-- Ongoing performance and usability polish
+- Continued public-moderation tooling improvements
+- Expanded market/tooltip intelligence data
+- More export/import/backup quality-of-life tools
+- Additional performance and usability polish
