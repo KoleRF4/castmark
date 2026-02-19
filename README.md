@@ -1,24 +1,25 @@
 # RF4 Castmark
 
-**RF4 Castmark** is a desktop companion for **Russian Fishing 4** focused on practical fishing intel: map spots, tackle notes, trophies, recipes, public sharing, and moderation workflows.
+**RF4 Castmark** is a desktop companion for **Russian Fishing 4** focused on practical fishing intel: map spots, tackle notes, trophies, recipes, sharing, and moderation workflows.
 
 Built for players who want fast, organized, in-session decision support.
 
 ---
 
-## Highlights (v1.0.0)
+## Highlights (v1.5.0)
 
-- Full Maps workflow with tackle-aware saved/public spot notes
-- Public share pipeline (submit, approve/reject, vote, report, delete)
-- Duplicate-share protection and stricter share validation
-- Waterbodies progression tools and trophy-focused tracking
-- Recipes system (Groundbait + PVA) with improved UX
-- Rich smart tooltips (fish, baits, items, rigs, hooks, recipes, spots)
-- Local item market + bait intelligence support
-- Resources Hub with in-app guides and utility pages
-- Fish Finder mini-tool (challenge/random target helper)
-- Sticky Notes panel for persistent local notes
-- Theme/UI consistency pass across major views
+- Complete UI/UX redesign across the app with updated layouts, stronger hierarchy, and more consistent interactions.
+- SH-Default is now the default theme, with a one-time migration that moves updated installs onto SH-Default.
+- Theme foundation transition support, including compatibility mode for older Material-based themes (still functional but not fully completed).
+- Full Maps workflow with detailed tackle-aware spot notes, catch journal entries, and improved modal/tooltip behavior.
+- Public sharing pipeline with moderation lifecycle, duplicate protection, validation hardening, vote/report flow, and moderation notifications.
+- Private Squad sharing flow (`Send to Squad`) with squad code feed support.
+- Multi-tag spots (for example Trophy + Money) and richer bottom setup metadata (Mount/Additives support).
+- Trolling visuals standardized to `#b0fc00` across icons and UI rendering.
+- Waterbodies progression tools with species/trophy-focused tracking and economy reference support.
+- Recipes system (Groundbait + PVA) with smarter autocomplete and quality-of-life improvements.
+- Smart tooltip intelligence across fish, baits, items, rigs, hooks, recipes, and spots.
+- Resources Hub utilities including Fish Finder, Trophy Wheel, Sticky Notes, Wear Calculator, and Trip Planner.
 
 ---
 
@@ -26,10 +27,12 @@ Built for players who want fast, organized, in-session decision support.
 
 - Overlay-friendly desktop runtime
 - Coordinate-based spot logging and management
-- Tackle-specific spot metadata (method, bait/lure, depth, rig/hook context)
+- Technique-specific spot metadata (float, spin, bottom, trolling, general)
+- Catch journal and confidence-oriented spot scoring insights
 - Trophy and progress tracking
 - Recipe tracking and quick sharing workflows
-- Public community spot browsing with voting
+- Public community browsing with voting and reporting
+- Private Squad sharing with feed retrieval
 - Local-first persistence for personal data
 - Built-in quality-of-life tools and guides
 
@@ -37,13 +40,13 @@ Built for players who want fast, organized, in-session decision support.
 
 ## Development Status
 
-**Version:** `v1.0.0`  
+**Version:** `v1.5.0`  
 Actively maintained.
 
 You should expect:
-- Frequent QoL updates
+- Frequent quality-of-life updates
 - Continued UI/UX polish
-- Ongoing data/model improvements for tooltip intelligence
+- Ongoing data/model improvements for tooltip and map intelligence
 
 Feedback directly influences priority.
 
@@ -53,8 +56,8 @@ Feedback directly influences priority.
 
 Get the latest Windows build from **Releases**:
 
-- `RF4 Castmark Setup.exe` (installer)
-- `RF4 Castmark.exe` (portable)
+- `RF4-Castmark-Setup-x.y.z.exe` (installer)
+- `RF4-Castmark-x.y.z.exe` (portable)
 
 If Windows SmartScreen appears:
 
@@ -74,7 +77,7 @@ RF4 Castmark is a reference companion, not automation.
 - Does **not** require RF4 account credentials
 - Stores personal app data locally on your machine
 
-Download from official release links only.
+Download from official release links only (here). I will NEVER authorize this to be shared or hosted anywhere besides here. If you find someone else offering RF4 Castmark downloads, do not open it or use it. Please report those cases immediately.
 
 ---
 
@@ -84,11 +87,11 @@ Download from official release links only.
 2. Launch **RF4 Castmark**
 3. Pick a map/tab and start logging spots or reviewing intel
 4. Use sharing, recipes, trophies, and resources while playing
-5. Toggle overlay visibility with your configured shortcut
+5. Toggle overlay visibility with your configured shortcut (default `F8`)
 
 ---
 
-## Public Sharing & Moderation
+## Public Sharing and Moderation
 
 RF4 Castmark includes a public sharing system with moderation controls:
 
@@ -97,6 +100,7 @@ RF4 Castmark includes a public sharing system with moderation controls:
 - Pending/approved/rejected lifecycle
 - Admin moderation panel support
 - Duplicate and validation safeguards
+- Submitter moderation notifications and inbox summary flow
 
 ---
 
@@ -109,7 +113,7 @@ Intended for personal reference and convenience.
 
 ---
 
-## Bug Reports / Feature Requests
+## Bug Reports and Feature Requests
 
 Use the **Issues** tab and include:
 
@@ -136,7 +140,7 @@ Thanks to testers, moderators, and community contributors.
 
 ## Roadmap
 
-- Continued public-moderation tooling improvements
+- Continued moderation tooling and quality controls
 - Expanded market/tooltip intelligence data
 - More export/import/backup quality-of-life tools
 - Additional performance and usability polish
