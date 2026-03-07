@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!--
+    Source of the public GitHub Pages root index.html.
+    Keep asset paths written as if this file is hosted at repo root.
+  -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Castmark Share</title>
@@ -88,6 +92,10 @@
       gap: 8px;
     }
 
+    .share-actions .ui-btn {
+      min-width: 150px;
+    }
+
     .share-status {
       min-height: 16px;
     }
@@ -132,7 +140,7 @@
             <img src="assets/img/logo-castmark.svg" alt="RF4 Castmark" class="share-logo">
             <div>
               <div class="share-title">Castmark Share</div>
-              <div class="share-subtitle">Copy a share code for RF4 Castmark. <br />The code lives in the URL hash and never touches a server.</div>
+              <div class="share-subtitle">Open a Castmark community share, save it straight into the desktop app, or copy the raw code for manual import.</div>
             </div>
           </div>
         </div>
@@ -142,10 +150,11 @@
         <div class="ui-card-header">Share Code</div>
         <div class="ui-card-body">
           <div id="share-empty" class="share-empty">
-            No share code detected. Open a Castmark share link that ends with <strong>#share=...</strong>.
+            No share code detected. Open a Castmark share page link or a link that ends with <strong>#share=...</strong>.
           </div>
           <textarea id="share-code" class="ui-textarea share-code" readonly></textarea>
           <div class="share-actions">
+            <button id="save-castmark" class="ui-btn ui-btn--primary" type="button">Save in Castmark</button>
             <button id="copy-code" class="ui-btn ui-btn--success" type="button">Copy for Castmark</button>
             <button id="copy-url" class="ui-btn ui-btn--surface" type="button">Copy Share URL</button>
           </div>
@@ -156,9 +165,9 @@
       <section class="ui-card">
         <div class="ui-card-header">Import Steps</div>
         <div class="ui-card-body share-steps">
-          <div>1. Open Castmark and go to Settings -> Maps & Spots.</div>
-          <div>2. Click "Share Code (Paste)".</div>
-          <div>3. Paste the code and import.</div>
+          <div>1. Click "Save in Castmark" to send this spot straight into your Saved tab.</div>
+          <div>2. If the app is not installed or your browser blocks the app link, use "Copy for Castmark".</div>
+          <div>3. In the app, go to Settings -> Maps & Spots -> Import Share and paste the code.</div>
         </div>
       </section>
 
@@ -170,9 +179,16 @@
     const SHARE_PREFIX = "RF4CM1:";
     const codeEl = document.getElementById("share-code");
     const emptyEl = document.getElementById("share-empty");
+    const saveCastmarkBtn = document.getElementById("save-castmark");
     const copyCodeBtn = document.getElementById("copy-code");
     const copyUrlBtn = document.getElementById("copy-url");
     const statusEl = document.getElementById("share-status");
+    let activeShareMeta = {
+      code: "",
+      shareUrl: "",
+      mapKey: "",
+      mapName: ""
+    };
 
     const setStatus = (message = "") => {
       if (!statusEl) return;
@@ -211,6 +227,80 @@
       return `${getBaseUrl()}#share=${encodeURIComponent(code)}`;
     };
 
+    const getQueryParam = (key) => {
+      try {
+        return new URL(window.location.href).searchParams.get(key) || "";
+      } catch {
+        return "";
+      }
+    };
+
+    const sanitizeText = (value, max = 1200) => {
+      const text = String(value || "").trim();
+      if (!text) return "";
+      return text.slice(0, Math.max(1, Math.floor(max)));
+    };
+
+    const buildCastmarkSaveUrl = (meta = {}) => {
+      const code = sanitizeText(meta.code, 16000);
+      const shareUrl = sanitizeText(meta.shareUrl, 1600);
+      if (!shareUrl && !code) return "";
+      const params = new URLSearchParams();
+      if (shareUrl) params.set("shareUrl", shareUrl);
+      else params.set("shareCode", code);
+      const mapKey = sanitizeText(meta.mapKey, 128);
+      const mapName = sanitizeText(meta.mapName, 160);
+      if (mapKey) params.set("mapKey", mapKey);
+      if (mapName) params.set("mapName", mapName);
+      return `castmark://save?${params.toString()}`;
+    };
+
+    const openCastmarkSave = (meta = {}) => {
+      const deepLink = buildCastmarkSaveUrl(meta);
+      if (!deepLink) {
+        setStatus("No share code available yet.");
+        return false;
+      }
+      window.location.href = deepLink;
+      return true;
+    };
+
+    const normalizeShareUrl = (value) => {
+      const raw = sanitizeText(value, 1600);
+      if (!raw) return "";
+      let parsed = null;
+      try {
+        parsed = new URL(raw);
+      } catch {
+        return "";
+      }
+      const protocol = String(parsed.protocol || "").toLowerCase();
+      if (protocol !== "http:" && protocol !== "https:") return "";
+      return parsed.href;
+    };
+
+    const resolveShareCodeFromUrl = async (shareUrl) => {
+      const safeShareUrl = normalizeShareUrl(shareUrl);
+      if (!safeShareUrl) return null;
+      let res = null;
+      let data = null;
+      try {
+        res = await fetch(safeShareUrl, { cache: "no-store" });
+        data = await res.json();
+      } catch {
+        return null;
+      }
+      if (!res || !res.ok || !data || typeof data !== "object") return null;
+      const code = extractShareCode(data.code || data.shareCode || "");
+      if (!code) return null;
+      return {
+        code,
+        shareUrl: safeShareUrl,
+        mapKey: sanitizeText(data?.meta?.mapKey, 128),
+        mapName: sanitizeText(data?.meta?.mapName, 160)
+      };
+    };
+
     const copyText = async (text) => {
       if (!text) return false;
       try {
@@ -232,19 +322,25 @@
       }
     };
 
-    const applyShareCode = (code) => {
+    const applyShareCode = (meta = null) => {
+      const nextMeta = meta && typeof meta === "object" ? meta : {};
+      const code = sanitizeText(nextMeta.code, 16000);
+      activeShareMeta = {
+        code,
+        shareUrl: sanitizeText(nextMeta.shareUrl, 1600),
+        mapKey: sanitizeText(nextMeta.mapKey, 128),
+        mapName: sanitizeText(nextMeta.mapName, 160)
+      };
       const hasCode = !!code;
       if (codeEl) {
         codeEl.value = code || "";
         codeEl.disabled = !hasCode;
       }
       if (emptyEl) emptyEl.style.display = hasCode ? "none" : "block";
+      if (saveCastmarkBtn) saveCastmarkBtn.disabled = !hasCode;
       if (copyCodeBtn) copyCodeBtn.disabled = !hasCode;
       if (copyUrlBtn) copyUrlBtn.disabled = !hasCode;
     };
-
-    const code = extractShareCode(window.location.href);
-    applyShareCode(code);
 
     if (codeEl) {
       codeEl.addEventListener("click", () => {
@@ -252,20 +348,59 @@
       });
     }
 
+    if (saveCastmarkBtn) {
+      saveCastmarkBtn.addEventListener("click", () => {
+        const opened = openCastmarkSave(activeShareMeta);
+        if (opened) setStatus("Opening Castmark...");
+      });
+    }
+
     if (copyCodeBtn) {
       copyCodeBtn.addEventListener("click", async () => {
-        const ok = await copyText(codeEl?.value || "");
+        const ok = await copyText(activeShareMeta.code || "");
         setStatus(ok ? "Share code copied." : "Copy failed.");
       });
     }
 
     if (copyUrlBtn) {
       copyUrlBtn.addEventListener("click", async () => {
-        const url = buildShareUrl(codeEl?.value || "");
+        const url = buildShareUrl(activeShareMeta.code || "");
         const ok = await copyText(url);
         setStatus(ok ? "Share URL copied." : "Copy failed.");
       });
     }
+
+    const init = async () => {
+      const hashCode = extractShareCode(window.location.href);
+      if (hashCode) {
+        applyShareCode({ code: hashCode });
+      } else {
+        const shareUrl = getQueryParam("shareUrl");
+        if (shareUrl) {
+          setStatus("Loading shared spot...");
+          const resolved = await resolveShareCodeFromUrl(shareUrl);
+          if (resolved) {
+            applyShareCode(resolved);
+            setStatus("");
+          } else {
+            applyShareCode(null);
+            setStatus("Failed to load the shared spot.");
+          }
+        } else {
+          applyShareCode(null);
+        }
+      }
+
+      const shouldLaunch = String(getQueryParam("launch") || "").trim() === "1";
+      if (shouldLaunch && activeShareMeta.code) {
+        setTimeout(() => {
+          const opened = openCastmarkSave(activeShareMeta);
+          if (opened) setStatus("Opening Castmark...");
+        }, 180);
+      }
+    };
+
+    void init();
   </script>
 </body>
 </html>
