@@ -113,6 +113,30 @@
       gap: 14px;
     }
 
+    .mobile-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .mobile-tab {
+      min-width: 108px;
+    }
+
+    .mobile-tab[aria-pressed="true"] {
+      background: var(--accent);
+      color: var(--accent-contrast, #fff);
+      border-color: color-mix(in srgb, var(--accent) 70%, transparent);
+    }
+
+    .mobile-view {
+      display: none;
+    }
+
+    .mobile-view.is-active {
+      display: grid;
+    }
+
     .mobile-card-body {
       display: grid;
       gap: 12px;
@@ -165,6 +189,10 @@
       font-size: 13px;
       color: var(--text);
       word-break: break-word;
+    }
+
+    .mobile-pair-form.is-disabled {
+      opacity: 0.7;
     }
 
     .mobile-map-card {
@@ -506,97 +534,100 @@
       </div>
     </section>
 
-    <div class="mobile-grid">
-      <aside class="mobile-stack">
-        <section class="ui-card">
-          <div class="ui-card-header">Pair This Device</div>
-          <div class="ui-card-body mobile-card-body">
-            <div class="mobile-meta-list">
-              <div class="mobile-meta">
-                <div class="mobile-meta-label">This Device ID</div>
-                <div id="device-id" class="mobile-meta-value">-</div>
-              </div>
-              <div class="mobile-meta">
-                <div class="mobile-meta-label">Pair State</div>
-                <div id="pair-state" class="mobile-meta-value">Checking…</div>
-              </div>
-            </div>
+    <div class="mobile-tabs" role="tablist" aria-label="Castmark Mobile sections">
+      <button id="mobile-tab-app" type="button" class="ui-btn ui-btn--surface mobile-tab" aria-pressed="true">Spots</button>
+      <button id="mobile-tab-setup" type="button" class="ui-btn ui-btn--surface mobile-tab" aria-pressed="false">Setup</button>
+    </div>
 
-            <div class="mobile-pair-form">
+    <section id="mobile-app-view" class="mobile-stack mobile-view is-active">
+      <section class="ui-card mobile-map-card">
+        <div class="ui-card-body mobile-card-body">
+          <div id="map-hero" class="mobile-map-hero">
+            <div class="mobile-map-copy">
+              <h2 id="map-name" class="mobile-map-name">Select a lake</h2>
+              <p id="map-summary" class="mobile-map-summary">Pair the device, then pick a lake to browse its synced private spots.</p>
+            </div>
+          </div>
+
+          <div class="mobile-toolbar">
+            <div class="mobile-field">
+              <label class="ui-label" for="map-select">Lake</label>
+              <select id="map-select" class="ui-input"></select>
+            </div>
+            <button id="refresh-spots" type="button" class="ui-btn ui-btn--surface">Refresh</button>
+            <button id="add-spot" type="button" class="ui-btn ui-btn--primary">Add Spot</button>
+          </div>
+
+          <div id="spots-status" class="mobile-status"></div>
+        </div>
+      </section>
+
+      <section class="ui-card">
+        <div class="ui-card-body mobile-card-body">
+          <div class="mobile-list-head">
+            <div>
+              <div class="ui-card-header" style="padding: 0;">Lake Spots</div>
+              <div id="spots-count" class="mobile-list-count">0 spots</div>
+            </div>
+            <div class="mobile-inline-note">Changes save straight to your private sync account.</div>
+          </div>
+
+          <div id="spots-empty" class="mobile-empty">Pair this device and pick a lake to view private spots.</div>
+          <div id="spots-list" class="mobile-list"></div>
+        </div>
+      </section>
+    </section>
+
+    <section id="mobile-setup-view" class="mobile-stack mobile-view">
+      <section class="ui-card">
+        <div class="ui-card-header">Pair This Device</div>
+        <div class="ui-card-body mobile-card-body">
+          <div class="mobile-meta-list">
+            <div class="mobile-meta">
+              <div class="mobile-meta-label">This Device ID</div>
+              <div id="device-id" class="mobile-meta-value">-</div>
+            </div>
+            <div class="mobile-meta">
+              <div class="mobile-meta-label">Pair State</div>
+              <div id="pair-state" class="mobile-meta-value">Checking…</div>
+            </div>
+          </div>
+
+          <div id="pair-form" class="mobile-pair-form">
+            <div class="mobile-field">
+              <label class="ui-label" for="pair-code-input">Desktop Pair Code</label>
+              <input id="pair-code-input" class="ui-input" type="text" inputmode="text" autocomplete="off" placeholder="CM-1234ABCD-5678">
+            </div>
+            <div class="mobile-actions">
+              <button id="pair-code-submit" type="button" class="ui-btn ui-btn--success">Pair Device</button>
+              <button id="refresh-devices" type="button" class="ui-btn ui-btn--surface">Refresh Pair State</button>
+              <button id="copy-device-id" type="button" class="ui-btn ui-btn--quiet">Copy Device ID</button>
+            </div>
+            <div id="pair-status" class="mobile-status"></div>
+          </div>
+
+          <div class="mobile-meta">
+            <div class="mobile-meta-label">Linked Devices</div>
+            <div id="linked-devices" class="mobile-meta-value">No linked account yet.</div>
+          </div>
+
+          <details class="mobile-details">
+            <summary>Advanced</summary>
+            <div class="mobile-card-body" style="margin-top: 10px;">
               <div class="mobile-field">
-                <label class="ui-label" for="pair-code-input">Desktop Pair Code</label>
-                <input id="pair-code-input" class="ui-input" type="text" inputmode="text" autocomplete="off" placeholder="CM-1234ABCD-5678">
+                <label class="ui-label" for="api-base-input">API Base</label>
+                <input id="api-base-input" class="ui-input" type="text" autocomplete="off" placeholder="https://castmark.rf4kole.workers.dev">
               </div>
               <div class="mobile-actions">
-                <button id="pair-code-submit" type="button" class="ui-btn ui-btn--success">Pair Device</button>
-                <button id="refresh-devices" type="button" class="ui-btn ui-btn--surface">Refresh Pair State</button>
-                <button id="copy-device-id" type="button" class="ui-btn ui-btn--quiet">Copy Device ID</button>
+                <button id="save-api-base" type="button" class="ui-btn ui-btn--surface">Save API Base</button>
+                <button id="reset-device" type="button" class="ui-btn ui-btn--danger">Reset This Device</button>
               </div>
-              <div id="pair-status" class="mobile-status"></div>
+              <div class="mobile-inline-note">Resetting clears local pairing state on this phone only. It does not delete spots from the shared private account.</div>
             </div>
-
-            <div class="mobile-meta">
-              <div class="mobile-meta-label">Linked Devices</div>
-              <div id="linked-devices" class="mobile-meta-value">No linked account yet.</div>
-            </div>
-
-            <details class="mobile-details">
-              <summary>Advanced</summary>
-              <div class="mobile-card-body" style="margin-top: 10px;">
-                <div class="mobile-field">
-                  <label class="ui-label" for="api-base-input">API Base</label>
-                  <input id="api-base-input" class="ui-input" type="text" autocomplete="off" placeholder="https://castmark.rf4kole.workers.dev">
-                </div>
-                <div class="mobile-actions">
-                  <button id="save-api-base" type="button" class="ui-btn ui-btn--surface">Save API Base</button>
-                  <button id="reset-device" type="button" class="ui-btn ui-btn--danger">Reset This Device</button>
-                </div>
-                <div class="mobile-inline-note">Resetting clears local pairing state on this phone only. It does not delete spots from the shared private account.</div>
-              </div>
-            </details>
-          </div>
-        </section>
-      </aside>
-
-      <main class="mobile-stack">
-        <section class="ui-card mobile-map-card">
-          <div class="ui-card-body mobile-card-body">
-            <div id="map-hero" class="mobile-map-hero">
-              <div class="mobile-map-copy">
-                <h2 id="map-name" class="mobile-map-name">Select a lake</h2>
-                <p id="map-summary" class="mobile-map-summary">Pair the device, then pick a lake to browse its synced private spots.</p>
-              </div>
-            </div>
-
-            <div class="mobile-toolbar">
-              <div class="mobile-field">
-                <label class="ui-label" for="map-select">Lake</label>
-                <select id="map-select" class="ui-input"></select>
-              </div>
-              <button id="refresh-spots" type="button" class="ui-btn ui-btn--surface">Refresh</button>
-              <button id="add-spot" type="button" class="ui-btn ui-btn--primary">Add Spot</button>
-            </div>
-
-            <div id="spots-status" class="mobile-status"></div>
-          </div>
-        </section>
-
-        <section class="ui-card">
-          <div class="ui-card-body mobile-card-body">
-            <div class="mobile-list-head">
-              <div>
-                <div class="ui-card-header" style="padding: 0;">Lake Spots</div>
-                <div id="spots-count" class="mobile-list-count">0 spots</div>
-              </div>
-              <div class="mobile-inline-note">Changes save straight to your private sync account.</div>
-            </div>
-
-            <div id="spots-empty" class="mobile-empty">Pair this device and pick a lake to view private spots.</div>
-            <div id="spots-list" class="mobile-list"></div>
-          </div>
-        </section>
-      </main>
-    </div>
+          </details>
+        </div>
+      </section>
+    </section>
 
     <div class="mobile-foot">RF4 Castmark is an independent tool and is not affiliated with Russian Fishing 4.</div>
   </div>
@@ -680,7 +711,9 @@
       submitterId: "",
       paired: false,
       devices: [],
+      catalogMaps: [],
       maps: [],
+      allSpotItems: [],
       boundsByMapKey: new Map(),
       selectedMapKey: "",
       selectedMap: null,
@@ -688,13 +721,19 @@
       loadingSpots: false,
       jsonMode: false,
       editorOpen: false,
-      editingItem: null
+      editingItem: null,
+      activeView: "app"
     };
 
     const els = {
+      mobileTabApp: document.getElementById("mobile-tab-app"),
+      mobileTabSetup: document.getElementById("mobile-tab-setup"),
+      mobileAppView: document.getElementById("mobile-app-view"),
+      mobileSetupView: document.getElementById("mobile-setup-view"),
       deviceId: document.getElementById("device-id"),
       pairState: document.getElementById("pair-state"),
       linkedDevices: document.getElementById("linked-devices"),
+      pairForm: document.getElementById("pair-form"),
       pairCodeInput: document.getElementById("pair-code-input"),
       pairCodeSubmit: document.getElementById("pair-code-submit"),
       refreshDevices: document.getElementById("refresh-devices"),
@@ -743,17 +782,38 @@
       }, timeout);
     };
 
-    const consumeBootstrapPairCode = () => {
+    const consumeBootstrapLaunch = () => {
       const url = new URL(window.location.href);
       const raw = String(url.searchParams.get("code") || "").trim().toUpperCase();
-      if (!MOBILE_PAIR_CODE_RE.test(raw)) return "";
+      const source = String(url.searchParams.get("source") || "").trim().toLowerCase();
+      const code = MOBILE_PAIR_CODE_RE.test(raw) ? raw : "";
+      const preferSetup = source === "desktop" || !!code;
       url.searchParams.delete("code");
+      url.searchParams.delete("source");
       if (window.history && typeof window.history.replaceState === "function") {
         const nextSearch = url.searchParams.toString();
         const nextUrl = `${url.pathname}${nextSearch ? `?${nextSearch}` : ""}${url.hash || ""}`;
         window.history.replaceState({}, "", nextUrl);
       }
-      return raw;
+      return { code, preferSetup };
+    };
+
+    const setActiveView = (view) => {
+      const next = view === "setup" ? "setup" : "app";
+      state.activeView = next;
+      const appActive = next === "app";
+      if (els.mobileAppView) els.mobileAppView.classList.toggle("is-active", appActive);
+      if (els.mobileSetupView) els.mobileSetupView.classList.toggle("is-active", !appActive);
+      if (els.mobileTabApp) {
+        els.mobileTabApp.setAttribute("aria-pressed", appActive ? "true" : "false");
+        els.mobileTabApp.classList.toggle("ui-btn--primary", appActive);
+        els.mobileTabApp.classList.toggle("ui-btn--surface", !appActive);
+      }
+      if (els.mobileTabSetup) {
+        els.mobileTabSetup.setAttribute("aria-pressed", appActive ? "false" : "true");
+        els.mobileTabSetup.classList.toggle("ui-btn--primary", !appActive);
+        els.mobileTabSetup.classList.toggle("ui-btn--surface", appActive);
+      }
     };
 
     const maskValue = (value, head = 6, tail = 4) => {
@@ -886,7 +946,78 @@
       return { x, y };
     };
 
+    const deriveMapKeyFromFileKey = (fileKey) => {
+      const safe = String(fileKey || "").trim().toLowerCase();
+      if (!safe.startsWith("spots_")) return "";
+      return safe.slice("spots_".length);
+    };
+
+    const getMapDescriptor = (mapKey) => {
+      const safeMapKey = String(mapKey || "").trim();
+      if (!safeMapKey) return null;
+      const catalogMatch = state.catalogMaps.find((row) => row.mapKey === safeMapKey);
+      if (catalogMatch) return { ...catalogMatch };
+      const label = safeMapKey
+        .replace(/_/g, " ")
+        .replace(/\b\w/g, (char) => char.toUpperCase());
+      return {
+        name: label || safeMapKey,
+        mapKey: safeMapKey,
+        summary: "",
+        heroImage: ""
+      };
+    };
+
+    const syncPairFormState = () => {
+      const locked = !!state.paired;
+      if (els.pairForm) els.pairForm.classList.toggle("is-disabled", locked);
+      if (els.pairCodeInput) {
+        els.pairCodeInput.disabled = locked;
+        els.pairCodeInput.placeholder = locked ? "This device is already paired" : "CM-1234ABCD-5678";
+      }
+      if (els.pairCodeSubmit) els.pairCodeSubmit.disabled = locked;
+    };
+
     const getSelectedFileKey = () => state.selectedMapKey ? `spots_${state.selectedMapKey}` : "";
+
+    const syncSpotsForSelectedMap = () => {
+      const fileKey = getSelectedFileKey();
+      state.spots = fileKey
+        ? state.allSpotItems.filter((item) => String(item?.fileKey || "").trim() === fileKey)
+        : [];
+      renderMapSelect();
+      renderMapHero();
+      renderSpots();
+    };
+
+    const refreshAvailableMaps = () => {
+      const syncedMapKeys = Array.from(new Set(
+        state.allSpotItems
+          .map((item) => String(item?.mapKey || deriveMapKeyFromFileKey(item?.fileKey) || "").trim())
+          .filter(Boolean)
+      ));
+      let nextMaps = [];
+      if (syncedMapKeys.length) {
+        const catalogOrder = new Map(state.catalogMaps.map((row, index) => [row.mapKey, index]));
+        nextMaps = syncedMapKeys
+          .map((mapKey) => getMapDescriptor(mapKey))
+          .filter(Boolean)
+          .sort((a, b) => {
+            const orderA = catalogOrder.has(a.mapKey) ? catalogOrder.get(a.mapKey) : Number.MAX_SAFE_INTEGER;
+            const orderB = catalogOrder.has(b.mapKey) ? catalogOrder.get(b.mapKey) : Number.MAX_SAFE_INTEGER;
+            return orderA - orderB || String(a.name || "").localeCompare(String(b.name || ""));
+          });
+      } else {
+        nextMaps = state.catalogMaps.slice();
+      }
+      state.maps = nextMaps;
+      if (!state.maps.some((row) => row.mapKey === state.selectedMapKey)) {
+        const storedMapKey = String(localStorage.getItem(STORAGE_KEYS.mapKey) || "").trim();
+        const nextMap = state.maps.find((row) => row.mapKey === storedMapKey) || state.maps[0] || null;
+        state.selectedMapKey = nextMap?.mapKey || "";
+        if (state.selectedMapKey) localStorage.setItem(STORAGE_KEYS.mapKey, state.selectedMapKey);
+      }
+    };
 
     const summarizeSpot = (item) => {
       const spot = item?.spot && typeof item.spot === "object" ? item.spot : {};
@@ -910,11 +1041,13 @@
       if (!state.paired) {
         els.pairState.textContent = "Not paired to a desktop profile yet.";
         els.linkedDevices.textContent = "No linked account yet.";
+        syncPairFormState();
         return;
       }
       els.pairState.textContent = `Paired • ${state.devices.length || 1} linked device${(state.devices.length || 1) === 1 ? "" : "s"}`;
       if (!state.devices.length) {
         els.linkedDevices.textContent = "This device is paired, but the device list is unavailable.";
+        syncPairFormState();
         return;
       }
       els.linkedDevices.textContent = state.devices
@@ -924,13 +1057,15 @@
           return `${label} (${maskValue(tag, 4, 3)})`;
         })
         .join(" • ");
+      syncPairFormState();
     };
 
     const renderMapSelect = () => {
       const options = state.maps
         .map((row) => `<option value="${row.mapKey}">${row.name}</option>`)
         .join("");
-      els.mapSelect.innerHTML = options || "<option value=\"\">No lakes</option>";
+      const emptyLabel = state.paired ? "No synced lakes" : "No lakes";
+      els.mapSelect.innerHTML = options || `<option value="">${emptyLabel}</option>`;
       if (state.selectedMapKey) els.mapSelect.value = state.selectedMapKey;
     };
 
@@ -962,7 +1097,7 @@
       els.spotsList.innerHTML = "";
       if (!state.paired) {
         els.spotsEmpty.style.display = "block";
-        els.spotsEmpty.textContent = "Pair this device with desktop Castmark first.";
+        els.spotsEmpty.textContent = "Pair this device from the Setup tab first.";
         syncActionState();
         return;
       }
@@ -1027,9 +1162,11 @@
         if (result.status === 404) {
           state.paired = false;
           state.devices = [];
+          state.allSpotItems = [];
           state.spots = [];
+          refreshAvailableMaps();
           renderDevices();
-          renderSpots();
+          syncSpotsForSelectedMap();
           syncActionState();
           if (!quiet) setStatus(els.pairStatus, "This device is not paired yet.");
           return false;
@@ -1046,25 +1183,42 @@
     };
 
     const loadSpots = async ({ quiet = false } = {}) => {
-      const fileKey = getSelectedFileKey();
-      if (!state.paired || !fileKey) {
+      if (!state.paired) {
+        state.allSpotItems = [];
         state.spots = [];
-        renderSpots();
+        refreshAvailableMaps();
+        syncSpotsForSelectedMap();
         return;
       }
       state.loadingSpots = true;
-      if (!quiet) els.spotsStatus.textContent = "Loading lake spots…";
-      const result = await apiFetch("GET", `/v1/private/spots?submitterId=${encodeURIComponent(state.submitterId)}&fileKey=${encodeURIComponent(fileKey)}`);
+      if (!quiet) els.spotsStatus.textContent = "Loading synced lakes…";
+      const result = await apiFetch("GET", `/v1/private/spots?submitterId=${encodeURIComponent(state.submitterId)}`);
       state.loadingSpots = false;
       if (!result.ok) {
+        if (result.status === 404) {
+          state.paired = false;
+          state.devices = [];
+        }
+        state.allSpotItems = [];
         state.spots = [];
-        renderSpots();
+        refreshAvailableMaps();
+        renderDevices();
+        syncSpotsForSelectedMap();
         if (!quiet) els.spotsStatus.textContent = result.message || "Failed to load spots.";
         return;
       }
-      state.spots = Array.isArray(result?.data?.items) ? result.data.items : [];
-      renderSpots();
-      if (!quiet) els.spotsStatus.textContent = `Loaded ${state.spots.length} spot${state.spots.length === 1 ? "" : "s"}.`;
+      state.allSpotItems = Array.isArray(result?.data?.items) ? result.data.items : [];
+      refreshAvailableMaps();
+      syncSpotsForSelectedMap();
+      if (!quiet) {
+        const spotCount = state.spots.length;
+        const syncedLakeCount = Array.from(new Set(
+          state.allSpotItems
+            .map((item) => String(item?.mapKey || deriveMapKeyFromFileKey(item?.fileKey) || "").trim())
+            .filter(Boolean)
+        )).length;
+        els.spotsStatus.textContent = `Loaded ${spotCount} spot${spotCount === 1 ? "" : "s"} for ${syncedLakeCount} available lake${syncedLakeCount === 1 ? "" : "s"}.`;
+      }
     };
 
     const buildBasicSpotFromForm = () => {
@@ -1229,13 +1383,20 @@
     };
 
     const loadMaps = async () => {
-      const [waterbodiesRes, boundsRes] = await Promise.all([
-        fetch("assets/data/waterbodies.json", { cache: "no-store" }),
-        fetch("assets/data/map-bounds.json", { cache: "no-store" })
-      ]);
-      const waterbodies = waterbodiesRes.ok ? await waterbodiesRes.json() : [];
-      const bounds = boundsRes.ok ? await boundsRes.json() : {};
-      state.maps = (Array.isArray(waterbodies) ? waterbodies : [])
+      let waterbodies = [];
+      let bounds = {};
+      try {
+        const [waterbodiesRes, boundsRes] = await Promise.all([
+          fetch("assets/data/waterbodies.json", { cache: "no-store" }),
+          fetch("assets/data/map-bounds.json", { cache: "no-store" })
+        ]);
+        waterbodies = waterbodiesRes.ok ? await waterbodiesRes.json() : [];
+        bounds = boundsRes.ok ? await boundsRes.json() : {};
+      } catch {
+        waterbodies = [];
+        bounds = {};
+      }
+      state.catalogMaps = (Array.isArray(waterbodies) ? waterbodies : [])
         .filter((row) => String(row?.mapKey || "").trim())
         .map((row) => ({
           name: String(row.name || row.mapKey || "").trim(),
@@ -1248,23 +1409,25 @@
         state.boundsByMapKey.set(String(key || "").trim(), value);
       });
       const storedMapKey = String(localStorage.getItem(STORAGE_KEYS.mapKey) || "").trim();
-      state.selectedMapKey = state.maps.some((row) => row.mapKey === storedMapKey)
+      state.selectedMapKey = state.catalogMaps.some((row) => row.mapKey === storedMapKey)
         ? storedMapKey
-        : (state.maps[0]?.mapKey || "");
-      renderMapSelect();
-      renderMapHero();
+        : (state.catalogMaps[0]?.mapKey || "");
+      refreshAvailableMaps();
+      syncSpotsForSelectedMap();
       syncActionState();
     };
 
     const setSelectedMap = async (mapKey) => {
       state.selectedMapKey = String(mapKey || "").trim();
       if (state.selectedMapKey) localStorage.setItem(STORAGE_KEYS.mapKey, state.selectedMapKey);
-      renderMapHero();
-      renderSpots();
-      await loadSpots();
+      syncSpotsForSelectedMap();
     };
 
     const handlePairSubmit = async () => {
+      if (state.paired) {
+        setStatus(els.pairStatus, "This device is already paired. Reset it first if you need to relink.");
+        return;
+      }
       const rawCode = String(els.pairCodeInput.value || "").trim().toUpperCase();
       if (!rawCode) {
         setStatus(els.pairStatus, "Enter the desktop pair code first.");
@@ -1288,6 +1451,7 @@
       renderDevices();
       syncActionState();
       await loadSpots({ quiet: true });
+      setActiveView("app");
       setStatus(els.pairStatus, "Device paired successfully.");
       setStatus(els.spotsStatus, "Pair complete. Spots are ready.");
     };
@@ -1300,15 +1464,27 @@
       state.submitterId = getSubmitterId();
       state.paired = false;
       state.devices = [];
+      state.allSpotItems = [];
       state.spots = [];
+      refreshAvailableMaps();
       renderDevices();
-      renderSpots();
+      syncSpotsForSelectedMap();
+      setActiveView("setup");
       syncActionState();
       setStatus(els.pairStatus, "This device was reset. Pair again to access desktop spots.");
     };
 
     const bindEvents = () => {
+      els.mobileTabApp.addEventListener("click", () => {
+        setActiveView("app");
+      });
+      els.mobileTabSetup.addEventListener("click", () => {
+        setActiveView("setup");
+      });
       els.pairCodeSubmit.addEventListener("click", handlePairSubmit);
+      els.pairCodeInput.addEventListener("input", () => {
+        if (!state.paired && els.pairCodeSubmit) els.pairCodeSubmit.disabled = false;
+      });
       els.refreshDevices.addEventListener("click", () => {
         void fetchDevices();
       });
@@ -1382,18 +1558,24 @@
     const init = async () => {
       state.submitterId = getSubmitterId();
       els.apiBaseInput.value = getApiBase();
-      const bootstrapCode = consumeBootstrapPairCode();
-      if (bootstrapCode) {
-        els.pairCodeInput.value = bootstrapCode;
+      const bootstrap = consumeBootstrapLaunch();
+      setActiveView(bootstrap.preferSetup ? "setup" : "app");
+      if (bootstrap.code) {
+        els.pairCodeInput.value = bootstrap.code;
         setStatus(els.pairStatus, "Pair code loaded from desktop QR.");
       }
       await loadMaps();
       renderDevices();
-      renderSpots();
+      syncSpotsForSelectedMap();
       syncActionState();
       bindEvents();
       await fetchDevices({ quiet: true });
       await loadSpots({ quiet: true });
+      if (state.paired) {
+        setActiveView("app");
+      } else if (bootstrap.preferSetup) {
+        setActiveView("setup");
+      }
     };
 
     void init();
