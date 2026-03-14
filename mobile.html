@@ -122,9 +122,9 @@
     }
 
     .mobile-tab[aria-pressed="true"] {
-      background: color-mix(in srgb, var(--bg-panel-3) 84%, var(--text) 10%);
-      color: var(--text);
-      border-color: transparent;
+      background: var(--ui-btn-tab-active-bg);
+      color: var(--ui-btn-tab-active-fg);
+      border-color: var(--ui-btn-tab-active-border);
       box-shadow: none;
     }
 
@@ -558,7 +558,7 @@
     }
   </style>
 </head>
-<body data-theme="sh-default" class="mobile-page">
+<body data-theme="sh-default" data-theme-foundation="shadcn" class="mobile-page">
   <div class="mobile-shell">
     <section class="ui-card mobile-hero">
       <div class="ui-card-body mobile-hero-body">
