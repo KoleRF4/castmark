@@ -13,6 +13,13 @@
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="icon" href="assets/img/logo-icon.svg" type="image/svg+xml">
   <style>
+    html,
+    body {
+      min-height: 100%;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+
     body.mobile-page {
       min-height: 100vh;
       background:
@@ -20,6 +27,7 @@
         radial-gradient(520px 280px at 95% 15%, color-mix(in srgb, var(--success) 16%, transparent) 0%, transparent 72%),
         linear-gradient(180deg, color-mix(in srgb, var(--bg-panel-2) 68%, #0e0c12 32%) 0%, var(--bg) 100%);
       overflow-x: hidden;
+      overflow-y: auto;
     }
 
     .mobile-shell {
@@ -660,6 +668,7 @@
 
   <script>
     const DEFAULT_API_BASE = "https://castmark.rf4kole.workers.dev";
+    const MOBILE_PAIR_CODE_RE = /^CM-[A-F0-9]{8}-[A-F0-9]{4}$/;
     const STORAGE_KEYS = {
       submitterId: "castmarkMobileSubmitterId",
       apiBase: "castmarkMobileApiBase",
@@ -732,6 +741,19 @@
       window.setTimeout(() => {
         if (el.textContent === text) el.textContent = "";
       }, timeout);
+    };
+
+    const consumeBootstrapPairCode = () => {
+      const url = new URL(window.location.href);
+      const raw = String(url.searchParams.get("code") || "").trim().toUpperCase();
+      if (!MOBILE_PAIR_CODE_RE.test(raw)) return "";
+      url.searchParams.delete("code");
+      if (window.history && typeof window.history.replaceState === "function") {
+        const nextSearch = url.searchParams.toString();
+        const nextUrl = `${url.pathname}${nextSearch ? `?${nextSearch}` : ""}${url.hash || ""}`;
+        window.history.replaceState({}, "", nextUrl);
+      }
+      return raw;
     };
 
     const maskValue = (value, head = 6, tail = 4) => {
@@ -1360,6 +1382,11 @@
     const init = async () => {
       state.submitterId = getSubmitterId();
       els.apiBaseInput.value = getApiBase();
+      const bootstrapCode = consumeBootstrapPairCode();
+      if (bootstrapCode) {
+        els.pairCodeInput.value = bootstrapCode;
+        setStatus(els.pairStatus, "Pair code loaded from desktop QR.");
+      }
       await loadMaps();
       renderDevices();
       renderSpots();
