@@ -23,15 +23,14 @@
     body.mobile-page {
       min-height: 100vh;
       background:
-        radial-gradient(820px 360px at 14% -12%, rgba(255, 255, 255, 0.06) 0%, transparent 72%),
-        radial-gradient(620px 300px at 94% 18%, color-mix(in srgb, var(--accent-glow-soft) 38%, transparent) 0%, transparent 76%),
-        linear-gradient(180deg, #2a292d 0%, #1a191e 38%, #111015 100%);
+        radial-gradient(720px 320px at 82% 18%, color-mix(in srgb, var(--accent-glow-soft) 26%, transparent) 0%, transparent 74%),
+        linear-gradient(180deg, #19181c 0%, #131216 56%, #0f0e12 100%);
       overflow-x: hidden;
       overflow-y: auto;
     }
 
     .mobile-shell {
-      width: min(960px, 100%);
+      width: min(980px, 100%);
       margin: 0 auto;
       padding: calc(18px + env(safe-area-inset-top, 0px)) 14px calc(36px + env(safe-area-inset-bottom, 0px));
       display: grid;
@@ -48,8 +47,8 @@
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(360px 220px at 100% 0%, color-mix(in srgb, var(--accent) 22%, transparent) 0%, transparent 74%),
-        linear-gradient(135deg, transparent 0%, color-mix(in srgb, #ffffff 4%, transparent) 100%);
+        radial-gradient(320px 180px at 100% 0%, color-mix(in srgb, var(--accent-glow-soft) 20%, transparent) 0%, transparent 74%),
+        linear-gradient(135deg, transparent 0%, color-mix(in srgb, #ffffff 2%, transparent) 100%);
       pointer-events: none;
     }
 
@@ -68,10 +67,11 @@
     .mobile-brand img {
       width: 42px;
       height: 42px;
-      border-radius: 14px;
-      background: color-mix(in srgb, var(--bg-panel-3) 92%, transparent);
+      border-radius: 12px;
+      border: 1px solid color-mix(in srgb, var(--border) 78%, transparent);
+      background: color-mix(in srgb, var(--bg-panel-2) 90%, transparent);
       padding: 6px;
-      box-shadow: var(--surface-shadow-md);
+      box-shadow: var(--surface-shadow-sm);
     }
 
     .mobile-brand-copy {
@@ -120,17 +120,16 @@
     }
 
     .mobile-tab {
-      min-width: 108px;
+      flex: 1 1 0;
+      min-width: 120px;
+      min-height: 42px;
     }
 
     .mobile-tab[aria-pressed="true"] {
-      background:
-        linear-gradient(180deg, #f2f0ed 0%, #d9d5d0 100%);
-      color: #17161b;
-      border-color: color-mix(in srgb, #ffffff 46%, var(--border) 54%);
-      box-shadow:
-        0 10px 24px rgba(0, 0, 0, 0.24),
-        inset 0 1px 0 rgba(255, 255, 255, 0.52);
+      background: color-mix(in srgb, var(--bg-panel-3) 84%, var(--text) 10%);
+      color: var(--text);
+      border-color: transparent;
+      box-shadow: none;
     }
 
     .mobile-view {
@@ -177,9 +176,9 @@
       display: grid;
       gap: 4px;
       padding: 10px 12px;
-      border: 1px solid color-mix(in srgb, var(--border) 78%, transparent);
-      border-radius: 14px;
-      background: color-mix(in srgb, var(--bg-panel-2) 74%, transparent);
+      border: 1px solid color-mix(in srgb, var(--border) 82%, transparent);
+      border-radius: 12px;
+      background: var(--bg-panel-2);
     }
 
     .mobile-meta-label {
@@ -209,9 +208,9 @@
       display: grid;
       gap: 8px;
       padding: 10px 12px;
-      border-radius: 14px;
-      border: 1px solid color-mix(in srgb, var(--border) 78%, transparent);
-      background: color-mix(in srgb, var(--bg-panel) 78%, transparent);
+      border-radius: 12px;
+      border: 1px solid color-mix(in srgb, var(--border) 82%, transparent);
+      background: var(--bg-panel-2);
     }
 
     .mobile-device-head {
@@ -247,16 +246,16 @@
       position: relative;
       min-height: 164px;
       padding: 16px;
-      border-radius: 18px;
+      border-radius: 16px;
       border: 1px solid color-mix(in srgb, var(--border) 82%, transparent);
       background:
-        linear-gradient(180deg, rgba(8, 8, 12, 0.18), rgba(8, 8, 12, 0.76)),
-        linear-gradient(135deg, color-mix(in srgb, var(--bg-panel-3) 86%, #000 14%), color-mix(in srgb, var(--bg-panel) 80%, #1a1524 20%));
+        linear-gradient(180deg, rgba(8, 8, 12, 0.16), rgba(8, 8, 12, 0.72)),
+        linear-gradient(180deg, color-mix(in srgb, var(--bg-panel-2) 92%, #0a0a0d 8%) 0%, color-mix(in srgb, var(--bg) 96%, #000000 4%) 100%);
       background-position: center;
       background-size: cover;
       display: flex;
       align-items: flex-end;
-      box-shadow: var(--surface-shadow-md);
+      box-shadow: inset 0 1px 0 color-mix(in srgb, #ffffff 4%, transparent);
     }
 
     .mobile-map-copy {
@@ -311,10 +310,10 @@
       display: grid;
       gap: 10px;
       padding: 14px;
-      border-radius: 18px;
+      border-radius: 16px;
       background:
-        linear-gradient(180deg, color-mix(in srgb, var(--bg-panel-2) 90%, transparent), color-mix(in srgb, var(--bg-panel) 92%, transparent));
-      border: 1px solid color-mix(in srgb, var(--border) 78%, transparent);
+        linear-gradient(180deg, color-mix(in srgb, var(--bg-panel-2) 96%, transparent), color-mix(in srgb, var(--bg-panel) 98%, transparent));
+      border: 1px solid color-mix(in srgb, var(--border) 82%, transparent);
       box-shadow: var(--surface-shadow-sm);
     }
 
@@ -355,8 +354,8 @@
     .mobile-chip {
       padding: 6px 10px;
       border-radius: 999px;
-      background: color-mix(in srgb, var(--bg-panel-3) 72%, transparent);
-      border: 1px solid color-mix(in srgb, var(--border) 72%, transparent);
+      background: color-mix(in srgb, var(--bg-panel-3) 88%, transparent);
+      border: 1px solid color-mix(in srgb, var(--border) 78%, transparent);
       color: var(--text-muted);
       font-size: 11px;
       letter-spacing: 0.03em;
@@ -370,10 +369,10 @@
 
     .mobile-empty {
       padding: 18px;
-      border-radius: 18px;
-      border: 1px dashed color-mix(in srgb, var(--border) 72%, transparent);
+      border-radius: 16px;
+      border: 1px dashed color-mix(in srgb, var(--border) 78%, transparent);
       color: var(--text-muted);
-      background: color-mix(in srgb, var(--bg-panel) 72%, transparent);
+      background: var(--bg-panel);
     }
 
     .mobile-status {
@@ -409,10 +408,10 @@
       width: min(760px, 100%);
       max-height: min(86vh, 920px);
       overflow: auto;
-      border-radius: 24px;
-      border: 1px solid color-mix(in srgb, var(--border) 78%, transparent);
+      border-radius: 18px;
+      border: 1px solid color-mix(in srgb, var(--border) 82%, transparent);
       background:
-        linear-gradient(180deg, color-mix(in srgb, var(--bg-panel-2) 96%, transparent), color-mix(in srgb, var(--bg-panel) 94%, transparent));
+        linear-gradient(180deg, color-mix(in srgb, var(--bg-panel-2) 98%, transparent), color-mix(in srgb, var(--bg-panel) 98%, transparent));
       box-shadow: var(--surface-shadow-lg);
       padding: 16px;
       display: grid;
@@ -457,9 +456,9 @@
       justify-content: space-between;
       gap: 12px;
       padding: 10px 12px;
-      border-radius: 14px;
-      background: color-mix(in srgb, var(--bg-panel-2) 78%, transparent);
-      border: 1px solid color-mix(in srgb, var(--border) 72%, transparent);
+      border-radius: 12px;
+      background: var(--bg-panel-2);
+      border: 1px solid color-mix(in srgb, var(--border) 82%, transparent);
     }
 
     .mobile-json-toggle-label {
@@ -515,10 +514,10 @@
     }
 
     details.mobile-details {
-      border: 1px solid color-mix(in srgb, var(--border) 72%, transparent);
-      border-radius: 16px;
+      border: 1px solid color-mix(in srgb, var(--border) 82%, transparent);
+      border-radius: 12px;
       padding: 10px 12px;
-      background: color-mix(in srgb, var(--bg-panel-2) 74%, transparent);
+      background: var(--bg-panel-2);
     }
 
     details.mobile-details > summary {
@@ -534,24 +533,14 @@
       gap: 8px;
     }
 
-    .mobile-page .ui-btn--success,
-    .mobile-page .ui-btn--primary {
-      background:
-        linear-gradient(180deg, #f4f2ef 0%, #dad6d1 100%);
-      border-color: color-mix(in srgb, #ffffff 44%, var(--border) 56%);
-      color: #17161b;
-      text-shadow: none;
-      box-shadow:
-        0 10px 22px rgba(0, 0, 0, 0.22),
-        inset 0 1px 0 rgba(255, 255, 255, 0.48);
+    .mobile-page .ui-card {
+      background: var(--bg-panel);
+      border-color: color-mix(in srgb, var(--border) 88%, transparent);
+      box-shadow: var(--surface-shadow-sm);
     }
 
-    .mobile-page .ui-btn--success:hover,
-    .mobile-page .ui-btn--primary:hover {
-      background:
-        linear-gradient(180deg, #fbfaf8 0%, #e3dfd9 100%);
-      color: #111015;
-      border-color: color-mix(in srgb, #ffffff 52%, var(--border) 48%);
+    .mobile-page .ui-btn {
+      min-height: 36px;
     }
 
     @media (max-width: 860px) {
@@ -574,7 +563,7 @@
 
       .mobile-sheet {
         padding: 14px;
-        border-radius: 20px;
+        border-radius: 16px;
       }
     }
   </style>
@@ -619,7 +608,7 @@
               <select id="map-select" class="ui-input"></select>
             </div>
             <button id="refresh-spots" type="button" class="ui-btn ui-btn--surface">Refresh</button>
-            <button id="add-spot" type="button" class="ui-btn ui-btn--primary">Add Spot</button>
+            <button id="add-spot" type="button" class="ui-btn ui-btn--success">Add Spot</button>
           </div>
 
           <div id="spots-status" class="mobile-status"></div>
@@ -872,13 +861,13 @@
       if (els.mobileSetupView) els.mobileSetupView.classList.toggle("is-active", !appActive);
       if (els.mobileTabApp) {
         els.mobileTabApp.setAttribute("aria-pressed", appActive ? "true" : "false");
-        els.mobileTabApp.classList.toggle("ui-btn--primary", appActive);
-        els.mobileTabApp.classList.toggle("ui-btn--surface", !appActive);
+        els.mobileTabApp.classList.add("ui-btn--surface");
+        els.mobileTabApp.classList.remove("ui-btn--primary");
       }
       if (els.mobileTabSetup) {
         els.mobileTabSetup.setAttribute("aria-pressed", appActive ? "false" : "true");
-        els.mobileTabSetup.classList.toggle("ui-btn--primary", !appActive);
-        els.mobileTabSetup.classList.toggle("ui-btn--surface", appActive);
+        els.mobileTabSetup.classList.add("ui-btn--surface");
+        els.mobileTabSetup.classList.remove("ui-btn--primary");
       }
     };
 
