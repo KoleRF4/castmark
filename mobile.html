@@ -24,8 +24,8 @@
       min-height: 100vh;
       background:
         radial-gradient(680px 320px at 15% -10%, color-mix(in srgb, var(--accent-glow-soft) 76%, transparent) 0%, transparent 72%),
-        radial-gradient(520px 280px at 95% 15%, color-mix(in srgb, var(--success) 16%, transparent) 0%, transparent 72%),
-        linear-gradient(180deg, color-mix(in srgb, var(--bg-panel-2) 68%, #0e0c12 32%) 0%, var(--bg) 100%);
+        radial-gradient(560px 300px at 94% 14%, color-mix(in srgb, var(--accent) 14%, transparent) 0%, transparent 74%),
+        linear-gradient(180deg, color-mix(in srgb, var(--bg-panel-2) 72%, #120f16 28%) 0%, #0d0a10 100%);
       overflow-x: hidden;
       overflow-y: auto;
     }
@@ -193,6 +193,46 @@
 
     .mobile-pair-form.is-disabled {
       opacity: 0.7;
+    }
+
+    .mobile-device-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .mobile-device-item {
+      display: grid;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid color-mix(in srgb, var(--border) 78%, transparent);
+      background: color-mix(in srgb, var(--bg-panel) 78%, transparent);
+    }
+
+    .mobile-device-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .mobile-device-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .mobile-device-meta {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .mobile-device-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
     }
 
     .mobile-map-card {
@@ -490,6 +530,21 @@
       gap: 8px;
     }
 
+    .mobile-page .ui-btn--success,
+    .mobile-page .ui-btn--primary {
+      background:
+        linear-gradient(180deg, color-mix(in srgb, var(--accent) 90%, #fff 10%), color-mix(in srgb, var(--accent-strong, var(--accent)) 88%, #000 12%));
+      border-color: color-mix(in srgb, var(--accent) 66%, #000 34%);
+      color: var(--accent-contrast, #fff);
+      box-shadow: 0 8px 18px color-mix(in srgb, var(--accent) 24%, transparent);
+    }
+
+    .mobile-page .ui-btn--success:hover,
+    .mobile-page .ui-btn--primary:hover {
+      background:
+        linear-gradient(180deg, color-mix(in srgb, var(--accent) 96%, #fff 4%), color-mix(in srgb, var(--accent-strong, var(--accent)) 92%, #000 8%));
+    }
+
     @media (max-width: 860px) {
       .mobile-grid {
         grid-template-columns: 1fr;
@@ -609,6 +664,7 @@
           <div class="mobile-meta">
             <div class="mobile-meta-label">Linked Devices</div>
             <div id="linked-devices" class="mobile-meta-value">No linked account yet.</div>
+            <div id="linked-devices-list" class="mobile-device-list"></div>
           </div>
 
           <details class="mobile-details">
@@ -733,6 +789,7 @@
       deviceId: document.getElementById("device-id"),
       pairState: document.getElementById("pair-state"),
       linkedDevices: document.getElementById("linked-devices"),
+      linkedDevicesList: document.getElementById("linked-devices-list"),
       pairForm: document.getElementById("pair-form"),
       pairCodeInput: document.getElementById("pair-code-input"),
       pairCodeSubmit: document.getElementById("pair-code-submit"),
@@ -1041,22 +1098,48 @@
       if (!state.paired) {
         els.pairState.textContent = "Not paired to a desktop profile yet.";
         els.linkedDevices.textContent = "No linked account yet.";
+        if (els.linkedDevicesList) els.linkedDevicesList.innerHTML = "";
         syncPairFormState();
         return;
       }
       els.pairState.textContent = `Paired • ${state.devices.length || 1} linked device${(state.devices.length || 1) === 1 ? "" : "s"}`;
       if (!state.devices.length) {
         els.linkedDevices.textContent = "This device is paired, but the device list is unavailable.";
+        if (els.linkedDevicesList) els.linkedDevicesList.innerHTML = "";
         syncPairFormState();
         return;
       }
-      els.linkedDevices.textContent = state.devices
-        .map((device) => {
-          const label = String(device?.deviceLabel || "").trim() || "Castmark Device";
-          const tag = String(device?.submitterId || "").trim();
-          return `${label} (${maskValue(tag, 4, 3)})`;
-        })
-        .join(" • ");
+      els.linkedDevices.textContent = `${state.devices.length} device${state.devices.length === 1 ? "" : "s"} linked to this Castmark private sync account.`;
+      if (els.linkedDevicesList) {
+        const canRemoveDevices = state.devices.length > 1;
+        els.linkedDevicesList.innerHTML = state.devices
+          .map((device) => {
+            const label = String(device?.deviceLabel || "").trim() || "Castmark Device";
+            const tag = String(device?.submitterId || "").trim();
+            const isCurrent = tag === state.submitterId;
+            const linkedLabel = formatDate(device?.linkedAt);
+            const lastSeenLabel = formatDate(device?.lastSeenAt);
+            const versionLabel = String(device?.appVersion || "").trim();
+            const actionLabel = isCurrent ? "Unlink This Device" : "Remove Device";
+            const disabledAttr = canRemoveDevices ? "" : " disabled";
+            return `
+              <div class="mobile-device-item">
+                <div class="mobile-device-head">
+                  <div class="mobile-device-name">${escapeHtml(label)}${isCurrent ? " (This Phone)" : ""}</div>
+                  <span class="mobile-chip">${escapeHtml(maskValue(tag, 4, 3))}</span>
+                </div>
+                <div class="mobile-device-meta">
+                  Linked: ${escapeHtml(linkedLabel)} • Last seen: ${escapeHtml(lastSeenLabel)}${versionLabel ? ` • App ${escapeHtml(versionLabel)}` : ""}
+                </div>
+                <div class="mobile-device-actions">
+                  <button type="button" class="ui-btn ui-btn--surface" data-device-action="copy-id" data-device-id="${escapeHtml(tag)}">Copy ID</button>
+                  <button type="button" class="ui-btn ui-btn--danger" data-device-action="remove" data-device-id="${escapeHtml(tag)}"${disabledAttr}>${actionLabel}</button>
+                </div>
+              </div>
+            `;
+          })
+          .join("");
+      }
       syncPairFormState();
     };
 
@@ -1179,6 +1262,43 @@
       renderDevices();
       syncActionState();
       if (!quiet) setStatus(els.pairStatus, "Pair state refreshed.");
+      return true;
+    };
+
+    const removeLinkedDevice = async (targetSubmitterId) => {
+      const safeTargetSubmitterId = String(targetSubmitterId || "").trim();
+      if (!safeTargetSubmitterId) return false;
+      const removingCurrent = safeTargetSubmitterId === state.submitterId;
+      const confirmed = window.confirm(
+        removingCurrent
+          ? "Unlink this phone from the Castmark private sync account?"
+          : "Remove this linked device from the Castmark private sync account?"
+      );
+      if (!confirmed) return false;
+      const result = await apiFetch("POST", `/v1/private/devices/${encodeURIComponent(safeTargetSubmitterId)}/delete`, {
+        submitterId: state.submitterId
+      });
+      if (!result.ok) {
+        setStatus(els.pairStatus, result.message || "Failed to remove linked device.");
+        return false;
+      }
+      state.devices = Array.isArray(result?.data?.items) ? result.data.items : [];
+      if (result?.data?.removedCurrentDevice) {
+        localStorage.removeItem(STORAGE_KEYS.pairedAt);
+        state.paired = false;
+        state.devices = [];
+        state.allSpotItems = [];
+        state.spots = [];
+        refreshAvailableMaps();
+        renderDevices();
+        syncSpotsForSelectedMap();
+        setActiveView("setup");
+        syncActionState();
+        setStatus(els.pairStatus, "This phone was unlinked from private sync.");
+        return true;
+      }
+      renderDevices();
+      setStatus(els.pairStatus, "Linked device removed.");
       return true;
     };
 
@@ -1494,6 +1614,26 @@
           setStatus(els.pairStatus, "Device ID copied.");
         } catch {
           setStatus(els.pairStatus, "Failed to copy device ID.");
+        }
+      });
+      els.linkedDevicesList.addEventListener("click", (event) => {
+        const button = event.target instanceof HTMLElement ? event.target.closest("[data-device-action]") : null;
+        if (!(button instanceof HTMLElement)) return;
+        const action = String(button.dataset.deviceAction || "").trim();
+        const submitterId = String(button.dataset.deviceId || "").trim();
+        if (!submitterId) return;
+        if (action === "copy-id") {
+          void navigator.clipboard.writeText(submitterId)
+            .then(() => {
+              setStatus(els.pairStatus, "Linked device ID copied.");
+            })
+            .catch(() => {
+              setStatus(els.pairStatus, "Failed to copy linked device ID.");
+            });
+          return;
+        }
+        if (action === "remove") {
+          void removeLinkedDevice(submitterId);
         }
       });
       els.saveApiBase.addEventListener("click", () => {
