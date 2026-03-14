@@ -21,6 +21,43 @@
     }
 
     body.mobile-page {
+      --bg: #090909;
+      --bg-elev: #0f0f0f;
+      --bg-panel: #121212;
+      --bg-panel-2: #161616;
+      --bg-panel-3: #1d1d1d;
+      --text: #fafafa;
+      --text-muted: #d4d4d4;
+      --text-dim: #a1a1a1;
+      --border: #272727;
+      --border-strong: #3f3f3f;
+      --overlay-top: #0a0a0a;
+      --overlay-bottom: #090909;
+      --ui-card-bg: #111111;
+      --ui-card-border: #272727;
+      --ui-input-bg: #0f0f0f;
+      --ui-input-border: #272727;
+      --ui-btn-surface-bg: #151515;
+      --ui-btn-surface-border: #272727;
+      --ui-btn-surface-fg: #fafafa;
+      --ui-btn-surface-hover-bg: #1e1e1e;
+      --ui-btn-surface-hover-border: #3f3f3f;
+      --ui-btn-surface-hover-fg: #fafafa;
+      --ui-btn-tab-bg: #121212;
+      --ui-btn-tab-border: #272727;
+      --ui-btn-tab-fg: #e4e4e4;
+      --ui-btn-tab-hover-bg: #1d1d1d;
+      --ui-btn-tab-hover-border: #3f3f3f;
+      --ui-btn-tab-hover-fg: #fafafa;
+      --ui-btn-tab-active-bg: #232323;
+      --ui-btn-tab-active-border: #525252;
+      --ui-btn-tab-active-fg: #ffffff;
+      --ui-btn-success-bg: #166534;
+      --ui-btn-success-border: transparent;
+      --ui-btn-success-fg: #dcfce7;
+      --ui-btn-success-hover-bg: #15803d;
+      --ui-btn-success-hover-border: transparent;
+      --ui-btn-success-hover-fg: #dcfce7;
       min-height: 100vh;
       background: linear-gradient(180deg, var(--overlay-top) 0%, var(--overlay-bottom) 100%);
       overflow-x: hidden;
@@ -119,9 +156,21 @@
       flex: 1 1 0;
       min-width: 120px;
       min-height: 42px;
+      --ui-btn-bg: var(--ui-btn-tab-bg);
+      --ui-btn-border: var(--ui-btn-tab-border);
+      --ui-btn-fg: var(--ui-btn-tab-fg);
+      --ui-btn-hover-bg: var(--ui-btn-tab-hover-bg);
+      --ui-btn-hover-border: var(--ui-btn-tab-hover-border);
+      --ui-btn-hover-fg: var(--ui-btn-tab-hover-fg);
     }
 
     .mobile-tab[aria-pressed="true"] {
+      --ui-btn-bg: var(--ui-btn-tab-active-bg);
+      --ui-btn-border: var(--ui-btn-tab-active-border);
+      --ui-btn-fg: var(--ui-btn-tab-active-fg);
+      --ui-btn-hover-bg: var(--ui-btn-tab-active-bg);
+      --ui-btn-hover-border: var(--ui-btn-tab-active-border);
+      --ui-btn-hover-fg: var(--ui-btn-tab-active-fg);
       background: var(--ui-btn-tab-active-bg);
       color: var(--ui-btn-tab-active-fg);
       border-color: var(--ui-btn-tab-active-border);
@@ -578,8 +627,8 @@
     </section>
 
     <div class="mobile-tabs" role="tablist" aria-label="Castmark Mobile sections">
-      <button id="mobile-tab-app" type="button" class="ui-btn ui-btn--surface mobile-tab" aria-pressed="true">Spots</button>
-      <button id="mobile-tab-setup" type="button" class="ui-btn ui-btn--surface mobile-tab" aria-pressed="false">Setup</button>
+      <button id="mobile-tab-app" type="button" class="ui-btn ui-btn--tab mobile-tab" aria-pressed="true">Spots</button>
+      <button id="mobile-tab-setup" type="button" class="ui-btn ui-btn--tab mobile-tab" aria-pressed="false">Setup</button>
     </div>
 
     <section id="mobile-app-view" class="mobile-stack mobile-view is-active">
@@ -851,13 +900,9 @@
       if (els.mobileSetupView) els.mobileSetupView.classList.toggle("is-active", !appActive);
       if (els.mobileTabApp) {
         els.mobileTabApp.setAttribute("aria-pressed", appActive ? "true" : "false");
-        els.mobileTabApp.classList.add("ui-btn--surface");
-        els.mobileTabApp.classList.remove("ui-btn--primary");
       }
       if (els.mobileTabSetup) {
         els.mobileTabSetup.setAttribute("aria-pressed", appActive ? "false" : "true");
-        els.mobileTabSetup.classList.add("ui-btn--surface");
-        els.mobileTabSetup.classList.remove("ui-btn--primary");
       }
     };
 
