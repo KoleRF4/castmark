@@ -1,0 +1,1375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!--
+    Source of the public GitHub Pages mobile companion page.
+    Keep asset paths written as if this file is hosted at repo root.
+  -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#141218">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>Castmark Mobile</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="icon" href="assets/img/logo-icon.svg" type="image/svg+xml">
+  <style>
+    body.mobile-page {
+      min-height: 100vh;
+      background:
+        radial-gradient(680px 320px at 15% -10%, color-mix(in srgb, var(--accent-glow-soft) 76%, transparent) 0%, transparent 72%),
+        radial-gradient(520px 280px at 95% 15%, color-mix(in srgb, var(--success) 16%, transparent) 0%, transparent 72%),
+        linear-gradient(180deg, color-mix(in srgb, var(--bg-panel-2) 68%, #0e0c12 32%) 0%, var(--bg) 100%);
+      overflow-x: hidden;
+    }
+
+    .mobile-shell {
+      width: min(960px, 100%);
+      margin: 0 auto;
+      padding: calc(18px + env(safe-area-inset-top, 0px)) 14px calc(36px + env(safe-area-inset-bottom, 0px));
+      display: grid;
+      gap: 14px;
+    }
+
+    .mobile-hero {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mobile-hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(360px 220px at 100% 0%, color-mix(in srgb, var(--accent) 22%, transparent) 0%, transparent 74%),
+        linear-gradient(135deg, transparent 0%, color-mix(in srgb, #ffffff 4%, transparent) 100%);
+      pointer-events: none;
+    }
+
+    .mobile-hero-body {
+      position: relative;
+      display: grid;
+      gap: 12px;
+    }
+
+    .mobile-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .mobile-brand img {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: color-mix(in srgb, var(--bg-panel-3) 92%, transparent);
+      padding: 6px;
+      box-shadow: var(--surface-shadow-md);
+    }
+
+    .mobile-brand-copy {
+      display: grid;
+      gap: 4px;
+    }
+
+    .mobile-badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .mobile-title {
+      font-size: clamp(28px, 6vw, 40px);
+      line-height: 1;
+      letter-spacing: -0.04em;
+      font-family: "Sora", var(--ui-font-family), sans-serif;
+      color: var(--text);
+      margin: 0;
+    }
+
+    .mobile-subtitle {
+      margin: 0;
+      max-width: 640px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .mobile-grid {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: 340px minmax(0, 1fr);
+      align-items: start;
+    }
+
+    .mobile-stack {
+      display: grid;
+      gap: 14px;
+    }
+
+    .mobile-card-body {
+      display: grid;
+      gap: 12px;
+    }
+
+    .mobile-pair-form {
+      display: grid;
+      gap: 10px;
+    }
+
+    .mobile-input-row {
+      display: grid;
+      gap: 10px;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: end;
+    }
+
+    .mobile-field {
+      display: grid;
+      gap: 6px;
+    }
+
+    .mobile-field--triple {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .mobile-meta-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .mobile-meta {
+      display: grid;
+      gap: 4px;
+      padding: 10px 12px;
+      border: 1px solid color-mix(in srgb, var(--border) 78%, transparent);
+      border-radius: 14px;
+      background: color-mix(in srgb, var(--bg-panel-2) 74%, transparent);
+    }
+
+    .mobile-meta-label {
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    .mobile-meta-value {
+      font-size: 13px;
+      color: var(--text);
+      word-break: break-word;
+    }
+
+    .mobile-map-card {
+      overflow: hidden;
+    }
+
+    .mobile-map-hero {
+      position: relative;
+      min-height: 164px;
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid color-mix(in srgb, var(--border) 82%, transparent);
+      background:
+        linear-gradient(180deg, rgba(8, 8, 12, 0.18), rgba(8, 8, 12, 0.76)),
+        linear-gradient(135deg, color-mix(in srgb, var(--bg-panel-3) 86%, #000 14%), color-mix(in srgb, var(--bg-panel) 80%, #1a1524 20%));
+      background-position: center;
+      background-size: cover;
+      display: flex;
+      align-items: flex-end;
+      box-shadow: var(--surface-shadow-md);
+    }
+
+    .mobile-map-copy {
+      display: grid;
+      gap: 4px;
+    }
+
+    .mobile-map-name {
+      font-size: clamp(22px, 5vw, 30px);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      font-family: "Sora", var(--ui-font-family), sans-serif;
+      margin: 0;
+      color: #fdfcff;
+      text-shadow: 0 8px 20px rgba(0, 0, 0, 0.42);
+    }
+
+    .mobile-map-summary {
+      margin: 0;
+      max-width: 520px;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.82);
+      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
+
+    .mobile-toolbar {
+      display: grid;
+      gap: 10px;
+      grid-template-columns: minmax(0, 1fr) auto auto;
+      align-items: end;
+    }
+
+    .mobile-list-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .mobile-list-count {
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+
+    .mobile-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .mobile-spot-card {
+      display: grid;
+      gap: 10px;
+      padding: 14px;
+      border-radius: 18px;
+      background:
+        linear-gradient(180deg, color-mix(in srgb, var(--bg-panel-2) 90%, transparent), color-mix(in srgb, var(--bg-panel) 92%, transparent));
+      border: 1px solid color-mix(in srgb, var(--border) 78%, transparent);
+      box-shadow: var(--surface-shadow-sm);
+    }
+
+    .mobile-spot-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: start;
+    }
+
+    .mobile-spot-title {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .mobile-spot-subtitle {
+      margin: 0;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .mobile-spot-notes {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--text-muted);
+      white-space: pre-wrap;
+    }
+
+    .mobile-chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .mobile-chip {
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--bg-panel-3) 72%, transparent);
+      border: 1px solid color-mix(in srgb, var(--border) 72%, transparent);
+      color: var(--text-muted);
+      font-size: 11px;
+      letter-spacing: 0.03em;
+    }
+
+    .mobile-spot-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .mobile-empty {
+      padding: 18px;
+      border-radius: 18px;
+      border: 1px dashed color-mix(in srgb, var(--border) 72%, transparent);
+      color: var(--text-muted);
+      background: color-mix(in srgb, var(--bg-panel) 72%, transparent);
+    }
+
+    .mobile-status {
+      min-height: 18px;
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+
+    .mobile-foot {
+      text-align: center;
+      color: var(--text-dim);
+      font-size: 11px;
+      padding-top: 4px;
+    }
+
+    .mobile-sheet-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(7, 7, 10, 0.74);
+      backdrop-filter: blur(10px);
+      display: none;
+      align-items: end;
+      justify-content: center;
+      padding: 14px;
+      z-index: 40;
+    }
+
+    .mobile-sheet-backdrop.is-open {
+      display: flex;
+    }
+
+    .mobile-sheet {
+      width: min(760px, 100%);
+      max-height: min(86vh, 920px);
+      overflow: auto;
+      border-radius: 24px;
+      border: 1px solid color-mix(in srgb, var(--border) 78%, transparent);
+      background:
+        linear-gradient(180deg, color-mix(in srgb, var(--bg-panel-2) 96%, transparent), color-mix(in srgb, var(--bg-panel) 94%, transparent));
+      box-shadow: var(--surface-shadow-lg);
+      padding: 16px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .mobile-sheet-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: start;
+    }
+
+    .mobile-sheet-title {
+      margin: 0;
+      font-size: 20px;
+      font-family: "Sora", var(--ui-font-family), sans-serif;
+      letter-spacing: -0.04em;
+    }
+
+    .mobile-sheet-subtitle {
+      margin: 4px 0 0;
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+
+    .mobile-danger {
+      color: var(--md-sys-color-error);
+    }
+
+    .mobile-json {
+      min-height: 220px;
+      font-family: var(--ui-font-family-mono);
+      font-size: 12px;
+      line-height: 1.45;
+      resize: vertical;
+    }
+
+    .mobile-json-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: color-mix(in srgb, var(--bg-panel-2) 78%, transparent);
+      border: 1px solid color-mix(in srgb, var(--border) 72%, transparent);
+    }
+
+    .mobile-json-toggle-label {
+      display: grid;
+      gap: 3px;
+    }
+
+    .mobile-json-toggle-label strong {
+      font-size: 13px;
+      color: var(--text);
+    }
+
+    .mobile-json-toggle-label span {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .mobile-switch {
+      position: relative;
+      width: 52px;
+      height: 32px;
+      border-radius: 999px;
+      border: 1px solid color-mix(in srgb, var(--border) 72%, transparent);
+      background: color-mix(in srgb, var(--bg-panel-3) 82%, transparent);
+      cursor: pointer;
+      transition: background var(--ui-duration-short2) var(--ui-motion-standard);
+    }
+
+    .mobile-switch::after {
+      content: "";
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.28);
+      transition: transform var(--ui-duration-short2) var(--ui-motion-standard);
+    }
+
+    .mobile-switch.is-on {
+      background: var(--accent);
+    }
+
+    .mobile-switch.is-on::after {
+      transform: translateX(20px);
+    }
+
+    .mobile-inline-note {
+      font-size: 11px;
+      color: var(--text-dim);
+    }
+
+    details.mobile-details {
+      border: 1px solid color-mix(in srgb, var(--border) 72%, transparent);
+      border-radius: 16px;
+      padding: 10px 12px;
+      background: color-mix(in srgb, var(--bg-panel-2) 74%, transparent);
+    }
+
+    details.mobile-details > summary {
+      cursor: pointer;
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .mobile-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    @media (max-width: 860px) {
+      .mobile-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .mobile-shell {
+        padding-left: 12px;
+        padding-right: 12px;
+      }
+
+      .mobile-input-row,
+      .mobile-toolbar,
+      .mobile-field--triple {
+        grid-template-columns: 1fr;
+      }
+
+      .mobile-sheet {
+        padding: 14px;
+        border-radius: 20px;
+      }
+    }
+  </style>
+</head>
+<body data-theme="default" class="mobile-page">
+  <div class="mobile-shell">
+    <section class="ui-card mobile-hero">
+      <div class="ui-card-body mobile-hero-body">
+        <div class="mobile-brand">
+          <img src="assets/img/logo-castmark.svg" alt="RF4 Castmark">
+          <div class="mobile-brand-copy">
+            <h1 class="mobile-title">Castmark Mobile</h1>
+            <p class="mobile-subtitle">Pair this device with your desktop Castmark profile, browse synced lake spots, and add or update private entries without a separate login.</p>
+          </div>
+        </div>
+        <div class="mobile-badge-row">
+          <span class="ui-badge">No Login</span>
+          <span class="ui-badge ui-badge--accent">Private Spots</span>
+          <span class="ui-badge">Phone + Desktop</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="mobile-grid">
+      <aside class="mobile-stack">
+        <section class="ui-card">
+          <div class="ui-card-header">Pair This Device</div>
+          <div class="ui-card-body mobile-card-body">
+            <div class="mobile-meta-list">
+              <div class="mobile-meta">
+                <div class="mobile-meta-label">This Device ID</div>
+                <div id="device-id" class="mobile-meta-value">-</div>
+              </div>
+              <div class="mobile-meta">
+                <div class="mobile-meta-label">Pair State</div>
+                <div id="pair-state" class="mobile-meta-value">Checking…</div>
+              </div>
+            </div>
+
+            <div class="mobile-pair-form">
+              <div class="mobile-field">
+                <label class="ui-label" for="pair-code-input">Desktop Pair Code</label>
+                <input id="pair-code-input" class="ui-input" type="text" inputmode="text" autocomplete="off" placeholder="CM-1234ABCD-5678">
+              </div>
+              <div class="mobile-actions">
+                <button id="pair-code-submit" type="button" class="ui-btn ui-btn--success">Pair Device</button>
+                <button id="refresh-devices" type="button" class="ui-btn ui-btn--surface">Refresh Pair State</button>
+                <button id="copy-device-id" type="button" class="ui-btn ui-btn--quiet">Copy Device ID</button>
+              </div>
+              <div id="pair-status" class="mobile-status"></div>
+            </div>
+
+            <div class="mobile-meta">
+              <div class="mobile-meta-label">Linked Devices</div>
+              <div id="linked-devices" class="mobile-meta-value">No linked account yet.</div>
+            </div>
+
+            <details class="mobile-details">
+              <summary>Advanced</summary>
+              <div class="mobile-card-body" style="margin-top: 10px;">
+                <div class="mobile-field">
+                  <label class="ui-label" for="api-base-input">API Base</label>
+                  <input id="api-base-input" class="ui-input" type="text" autocomplete="off" placeholder="https://castmark.rf4kole.workers.dev">
+                </div>
+                <div class="mobile-actions">
+                  <button id="save-api-base" type="button" class="ui-btn ui-btn--surface">Save API Base</button>
+                  <button id="reset-device" type="button" class="ui-btn ui-btn--danger">Reset This Device</button>
+                </div>
+                <div class="mobile-inline-note">Resetting clears local pairing state on this phone only. It does not delete spots from the shared private account.</div>
+              </div>
+            </details>
+          </div>
+        </section>
+      </aside>
+
+      <main class="mobile-stack">
+        <section class="ui-card mobile-map-card">
+          <div class="ui-card-body mobile-card-body">
+            <div id="map-hero" class="mobile-map-hero">
+              <div class="mobile-map-copy">
+                <h2 id="map-name" class="mobile-map-name">Select a lake</h2>
+                <p id="map-summary" class="mobile-map-summary">Pair the device, then pick a lake to browse its synced private spots.</p>
+              </div>
+            </div>
+
+            <div class="mobile-toolbar">
+              <div class="mobile-field">
+                <label class="ui-label" for="map-select">Lake</label>
+                <select id="map-select" class="ui-input"></select>
+              </div>
+              <button id="refresh-spots" type="button" class="ui-btn ui-btn--surface">Refresh</button>
+              <button id="add-spot" type="button" class="ui-btn ui-btn--primary">Add Spot</button>
+            </div>
+
+            <div id="spots-status" class="mobile-status"></div>
+          </div>
+        </section>
+
+        <section class="ui-card">
+          <div class="ui-card-body mobile-card-body">
+            <div class="mobile-list-head">
+              <div>
+                <div class="ui-card-header" style="padding: 0;">Lake Spots</div>
+                <div id="spots-count" class="mobile-list-count">0 spots</div>
+              </div>
+              <div class="mobile-inline-note">Changes save straight to your private sync account.</div>
+            </div>
+
+            <div id="spots-empty" class="mobile-empty">Pair this device and pick a lake to view private spots.</div>
+            <div id="spots-list" class="mobile-list"></div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div class="mobile-foot">RF4 Castmark is an independent tool and is not affiliated with Russian Fishing 4.</div>
+  </div>
+
+  <div id="editor-backdrop" class="mobile-sheet-backdrop" aria-hidden="true">
+    <div class="mobile-sheet" role="dialog" aria-modal="true" aria-labelledby="editor-title">
+      <div class="mobile-sheet-head">
+        <div>
+          <h3 id="editor-title" class="mobile-sheet-title">Edit Spot</h3>
+          <p id="editor-subtitle" class="mobile-sheet-subtitle">Basic mode is optimized for simple dot spots. Switch to JSON mode for advanced geometry or fields.</p>
+        </div>
+        <button id="editor-close" type="button" class="ui-btn ui-btn--icon ui-btn--quiet" aria-label="Close">×</button>
+      </div>
+
+      <div class="mobile-json-toggle">
+        <div class="mobile-json-toggle-label">
+          <strong>JSON Mode</strong>
+          <span>Use full raw spot payload editing for advanced geometry or uncommon fields.</span>
+        </div>
+        <button id="editor-json-toggle" type="button" class="mobile-switch" aria-label="Toggle JSON mode" aria-pressed="false"></button>
+      </div>
+
+      <div id="editor-basic-fields" class="mobile-card-body">
+        <div class="mobile-field mobile-field--triple">
+          <div class="mobile-field">
+            <label class="ui-label" for="editor-x">Map X</label>
+            <input id="editor-x" class="ui-input" type="number" step="0.1" inputmode="decimal" placeholder="105">
+          </div>
+          <div class="mobile-field">
+            <label class="ui-label" for="editor-y">Map Y</label>
+            <input id="editor-y" class="ui-input" type="number" step="0.1" inputmode="decimal" placeholder="115">
+          </div>
+          <div class="mobile-field">
+            <label class="ui-label" for="editor-type">Technique</label>
+            <select id="editor-type" class="ui-input">
+              <option value="">General</option>
+              <option value="float">Float</option>
+              <option value="spin">Spin</option>
+              <option value="bottom">Bottom</option>
+              <option value="trolling">Trolling</option>
+              <option value="marine">Marine</option>
+            </select>
+          </div>
+        </div>
+        <div class="mobile-field">
+          <label class="ui-label" for="editor-fish">Fish</label>
+          <input id="editor-fish" class="ui-input" type="text" autocomplete="off" placeholder="Pike">
+        </div>
+        <div class="mobile-field">
+          <label class="ui-label" for="editor-notes">Notes</label>
+          <textarea id="editor-notes" class="ui-textarea" placeholder="Bait, time window, retrieve, depth, route notes..."></textarea>
+        </div>
+        <div id="editor-basic-note" class="mobile-inline-note">Basic mode saves a simple dot spot using the selected lake bounds. Existing advanced shapes can still be viewed and edited in JSON mode.</div>
+      </div>
+
+      <div id="editor-json-fields" class="mobile-field">
+        <label class="ui-label" for="editor-json">Spot JSON</label>
+        <textarea id="editor-json" class="ui-textarea mobile-json" spellcheck="false"></textarea>
+        <div id="editor-json-status" class="mobile-inline-note">Valid JSON is required in JSON mode.</div>
+      </div>
+
+      <div class="mobile-actions">
+        <button id="editor-save" type="button" class="ui-btn ui-btn--success">Save Spot</button>
+        <button id="editor-delete" type="button" class="ui-btn ui-btn--danger">Delete Spot</button>
+        <button id="editor-cancel" type="button" class="ui-btn ui-btn--surface">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const DEFAULT_API_BASE = "https://castmark.rf4kole.workers.dev";
+    const STORAGE_KEYS = {
+      submitterId: "castmarkMobileSubmitterId",
+      apiBase: "castmarkMobileApiBase",
+      mapKey: "castmarkMobileMapKey",
+      pairedAt: "castmarkMobilePairedAt"
+    };
+
+    const state = {
+      submitterId: "",
+      paired: false,
+      devices: [],
+      maps: [],
+      boundsByMapKey: new Map(),
+      selectedMapKey: "",
+      selectedMap: null,
+      spots: [],
+      loadingSpots: false,
+      jsonMode: false,
+      editorOpen: false,
+      editingItem: null
+    };
+
+    const els = {
+      deviceId: document.getElementById("device-id"),
+      pairState: document.getElementById("pair-state"),
+      linkedDevices: document.getElementById("linked-devices"),
+      pairCodeInput: document.getElementById("pair-code-input"),
+      pairCodeSubmit: document.getElementById("pair-code-submit"),
+      refreshDevices: document.getElementById("refresh-devices"),
+      copyDeviceId: document.getElementById("copy-device-id"),
+      pairStatus: document.getElementById("pair-status"),
+      apiBaseInput: document.getElementById("api-base-input"),
+      saveApiBase: document.getElementById("save-api-base"),
+      resetDevice: document.getElementById("reset-device"),
+      mapHero: document.getElementById("map-hero"),
+      mapName: document.getElementById("map-name"),
+      mapSummary: document.getElementById("map-summary"),
+      mapSelect: document.getElementById("map-select"),
+      refreshSpots: document.getElementById("refresh-spots"),
+      addSpot: document.getElementById("add-spot"),
+      spotsStatus: document.getElementById("spots-status"),
+      spotsCount: document.getElementById("spots-count"),
+      spotsEmpty: document.getElementById("spots-empty"),
+      spotsList: document.getElementById("spots-list"),
+      editorBackdrop: document.getElementById("editor-backdrop"),
+      editorTitle: document.getElementById("editor-title"),
+      editorSubtitle: document.getElementById("editor-subtitle"),
+      editorClose: document.getElementById("editor-close"),
+      editorJsonToggle: document.getElementById("editor-json-toggle"),
+      editorBasicFields: document.getElementById("editor-basic-fields"),
+      editorJsonFields: document.getElementById("editor-json-fields"),
+      editorX: document.getElementById("editor-x"),
+      editorY: document.getElementById("editor-y"),
+      editorType: document.getElementById("editor-type"),
+      editorFish: document.getElementById("editor-fish"),
+      editorNotes: document.getElementById("editor-notes"),
+      editorJson: document.getElementById("editor-json"),
+      editorJsonStatus: document.getElementById("editor-json-status"),
+      editorBasicNote: document.getElementById("editor-basic-note"),
+      editorSave: document.getElementById("editor-save"),
+      editorDelete: document.getElementById("editor-delete"),
+      editorCancel: document.getElementById("editor-cancel")
+    };
+
+    const setStatus = (el, message, timeout = 2600) => {
+      if (!el) return;
+      const text = String(message || "").trim();
+      el.textContent = text;
+      if (!text) return;
+      window.setTimeout(() => {
+        if (el.textContent === text) el.textContent = "";
+      }, timeout);
+    };
+
+    const maskValue = (value, head = 6, tail = 4) => {
+      const safe = String(value || "").trim();
+      if (!safe) return "-";
+      if (safe.length <= head + tail + 2) return "••••••";
+      return `${safe.slice(0, head)}...${safe.slice(-tail)}`;
+    };
+
+    const normalizeApiBase = (raw) => String(raw || "").trim().replace(/[?#].*$/, "").replace(/\/+$/, "");
+
+    const getApiBase = () => {
+      const stored = normalizeApiBase(localStorage.getItem(STORAGE_KEYS.apiBase));
+      return stored || DEFAULT_API_BASE;
+    };
+
+    const setApiBase = (raw) => {
+      const safe = normalizeApiBase(raw);
+      if (safe) localStorage.setItem(STORAGE_KEYS.apiBase, safe);
+      else localStorage.removeItem(STORAGE_KEYS.apiBase);
+      return getApiBase();
+    };
+
+    const toBase64Url = (bytes) => {
+      let binary = "";
+      bytes.forEach((b) => {
+        binary += String.fromCharCode(b);
+      });
+      return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
+    };
+
+    const createSubmitterId = () => {
+      const bytes = new Uint8Array(18);
+      crypto.getRandomValues(bytes);
+      return `v1_${toBase64Url(bytes)}`;
+    };
+
+    const getSubmitterId = () => {
+      const stored = String(localStorage.getItem(STORAGE_KEYS.submitterId) || "").trim();
+      if (stored) return stored;
+      const created = createSubmitterId();
+      localStorage.setItem(STORAGE_KEYS.submitterId, created);
+      return created;
+    };
+
+    const readJson = async (response) => {
+      const text = await response.text();
+      if (!text) return null;
+      try {
+        return JSON.parse(text);
+      } catch {
+        return null;
+      }
+    };
+
+    const apiFetch = async (method, path, payload = null) => {
+      const base = getApiBase();
+      const endpoint = `${base}/${String(path || "").replace(/^\/+/, "")}`;
+      const options = {
+        method: String(method || "GET").toUpperCase(),
+        headers: {}
+      };
+      if (payload && typeof payload === "object") {
+        options.headers["content-type"] = "application/json";
+        options.body = JSON.stringify(payload);
+      }
+      let response = null;
+      let data = null;
+      try {
+        response = await fetch(endpoint, options);
+        data = await readJson(response);
+      } catch (error) {
+        return {
+          ok: false,
+          status: 0,
+          data: null,
+          message: error && error.message ? error.message : "Request failed."
+        };
+      }
+      if (!response.ok) {
+        const errorCode = String(data?.error || "").trim();
+        return {
+          ok: false,
+          status: response.status,
+          data,
+          message: errorCode ? `Request failed: ${errorCode}` : `Request failed (${response.status}).`
+        };
+      }
+      return { ok: true, status: response.status, data };
+    };
+
+    const getSpotAnchor = (spot) => {
+      if (!spot || typeof spot !== "object") return null;
+      if (spot.type === "rect" && spot.rect && Number.isFinite(spot.rect.x) && Number.isFinite(spot.rect.y)) {
+        return {
+          x: Number(spot.rect.x) + (Number(spot.rect.w || 0) / 2),
+          y: Number(spot.rect.y) + (Number(spot.rect.h || 0) / 2)
+        };
+      }
+      if (spot.type === "path" && Array.isArray(spot.points) && spot.points.length) {
+        const first = spot.points[0];
+        if (first && Number.isFinite(first.x) && Number.isFinite(first.y)) return { x: Number(first.x), y: Number(first.y) };
+      }
+      if (Number.isFinite(spot.x) && Number.isFinite(spot.y)) {
+        return { x: Number(spot.x), y: Number(spot.y) };
+      }
+      return null;
+    };
+
+    const normalizeToGameCoords = (spot, mapKey = "") => {
+      const anchor = getSpotAnchor(spot);
+      if (!anchor) return "";
+      const bounds = state.boundsByMapKey.get(String(mapKey || "").trim()) || null;
+      if (!bounds) return `${Math.round(anchor.x * 100)}:${Math.round(anchor.y * 100)}`;
+      const xGame = Number(bounds.xMin) + (anchor.x * (Number(bounds.xMax) - Number(bounds.xMin)));
+      const yGame = Number(bounds.yNorth) - (anchor.y * (Number(bounds.yNorth) - Number(bounds.ySouth)));
+      if (!Number.isFinite(xGame) || !Number.isFinite(yGame)) return `${Math.round(anchor.x * 100)}:${Math.round(anchor.y * 100)}`;
+      return `${Math.round(xGame)}:${Math.round(yGame)}`;
+    };
+
+    const toNormalizedFromGameCoords = (mapKey, xGame, yGame) => {
+      const bounds = state.boundsByMapKey.get(String(mapKey || "").trim()) || null;
+      if (!bounds) return null;
+      const xRange = Number(bounds.xMax) - Number(bounds.xMin);
+      const yRange = Number(bounds.yNorth) - Number(bounds.ySouth);
+      if (!Number.isFinite(xRange) || !Number.isFinite(yRange) || xRange === 0 || yRange === 0) return null;
+      const x = (Number(xGame) - Number(bounds.xMin)) / xRange;
+      const y = (Number(bounds.yNorth) - Number(yGame)) / yRange;
+      if (!Number.isFinite(x) || !Number.isFinite(y)) return null;
+      return { x, y };
+    };
+
+    const getSelectedFileKey = () => state.selectedMapKey ? `spots_${state.selectedMapKey}` : "";
+
+    const summarizeSpot = (item) => {
+      const spot = item?.spot && typeof item.spot === "object" ? item.spot : {};
+      const fish = String(spot.fish || "").trim() || "Untitled Spot";
+      const spotType = String(spot.spotType || "").trim() || "general";
+      const geometry = String(spot.type || "dot").trim() || "dot";
+      const coords = normalizeToGameCoords(spot, item?.mapKey || state.selectedMapKey);
+      const notes = String(spot.notes || "").trim();
+      return {
+        fish,
+        spotType,
+        geometry,
+        coords,
+        notes
+      };
+    };
+
+    const renderDevices = () => {
+      if (!els.deviceId) return;
+      els.deviceId.textContent = maskValue(state.submitterId);
+      if (!state.paired) {
+        els.pairState.textContent = "Not paired to a desktop profile yet.";
+        els.linkedDevices.textContent = "No linked account yet.";
+        return;
+      }
+      els.pairState.textContent = `Paired • ${state.devices.length || 1} linked device${(state.devices.length || 1) === 1 ? "" : "s"}`;
+      if (!state.devices.length) {
+        els.linkedDevices.textContent = "This device is paired, but the device list is unavailable.";
+        return;
+      }
+      els.linkedDevices.textContent = state.devices
+        .map((device) => {
+          const label = String(device?.deviceLabel || "").trim() || "Castmark Device";
+          const tag = String(device?.submitterId || "").trim();
+          return `${label} (${maskValue(tag, 4, 3)})`;
+        })
+        .join(" • ");
+    };
+
+    const renderMapSelect = () => {
+      const options = state.maps
+        .map((row) => `<option value="${row.mapKey}">${row.name}</option>`)
+        .join("");
+      els.mapSelect.innerHTML = options || "<option value=\"\">No lakes</option>";
+      if (state.selectedMapKey) els.mapSelect.value = state.selectedMapKey;
+    };
+
+    const renderMapHero = () => {
+      const map = state.maps.find((row) => row.mapKey === state.selectedMapKey) || null;
+      state.selectedMap = map;
+      if (!map) {
+        els.mapHero.style.backgroundImage = "";
+        els.mapName.textContent = "Select a lake";
+        els.mapSummary.textContent = "Pair the device, then pick a lake to browse its synced private spots.";
+        return;
+      }
+      els.mapHero.style.backgroundImage = map.heroImage ? `linear-gradient(180deg, rgba(8, 8, 12, 0.18), rgba(8, 8, 12, 0.76)), url("${map.heroImage}")` : "";
+      els.mapName.textContent = map.name;
+      els.mapSummary.textContent = String(map.summary || "").trim() || "No summary available.";
+    };
+
+    const syncActionState = () => {
+      const hasMap = !!state.selectedMapKey;
+      const canEditSpots = !!state.paired && hasMap;
+      els.refreshSpots.disabled = !hasMap;
+      els.addSpot.disabled = !canEditSpots;
+    };
+
+    const renderSpots = () => {
+      const items = Array.isArray(state.spots) ? state.spots.slice() : [];
+      items.sort((a, b) => Number(b?.updatedAt || 0) - Number(a?.updatedAt || 0));
+      els.spotsCount.textContent = `${items.length} spot${items.length === 1 ? "" : "s"}`;
+      els.spotsList.innerHTML = "";
+      if (!state.paired) {
+        els.spotsEmpty.style.display = "block";
+        els.spotsEmpty.textContent = "Pair this device with desktop Castmark first.";
+        syncActionState();
+        return;
+      }
+      if (!state.selectedMapKey) {
+        els.spotsEmpty.style.display = "block";
+        els.spotsEmpty.textContent = "Select a lake to browse synced spots.";
+        syncActionState();
+        return;
+      }
+      const showEmpty = items.length < 1;
+      els.spotsEmpty.style.display = showEmpty ? "block" : "none";
+      if (!items.length) {
+        els.spotsEmpty.textContent = "No synced spots for this lake yet. Push the lake from desktop or add a new spot here.";
+        syncActionState();
+        return;
+      }
+
+      items.forEach((item) => {
+        const summary = summarizeSpot(item);
+        const card = document.createElement("article");
+        card.className = "mobile-spot-card";
+        card.innerHTML = `
+          <div class="mobile-spot-head">
+            <div>
+              <h3 class="mobile-spot-title">${escapeHtml(summary.fish)}</h3>
+              <p class="mobile-spot-subtitle">${escapeHtml(summary.coords)} • ${escapeHtml(summary.spotType)} • ${escapeHtml(summary.geometry)}</p>
+            </div>
+            <span class="mobile-chip">${escapeHtml(item?.clientSpotId || item?.spotId || "")}</span>
+          </div>
+          <div class="mobile-chip-row">
+            <span class="mobile-chip">Lake: ${escapeHtml(state.selectedMap?.name || state.selectedMapKey)}</span>
+            <span class="mobile-chip">Updated: ${escapeHtml(formatDate(item?.updatedAt))}</span>
+          </div>
+          <p class="mobile-spot-notes">${escapeHtml(summary.notes || "No notes yet.")}</p>
+          <div class="mobile-spot-actions">
+            <button type="button" class="ui-btn ui-btn--surface" data-spot-action="edit" data-spot-id="${escapeHtml(item?.spotId || "")}">Edit</button>
+            <button type="button" class="ui-btn ui-btn--danger" data-spot-action="delete" data-spot-id="${escapeHtml(item?.spotId || "")}">Delete</button>
+          </div>
+        `;
+        els.spotsList.appendChild(card);
+      });
+      syncActionState();
+    };
+
+    const escapeHtml = (value) => String(value || "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+
+    const formatDate = (value) => {
+      const ms = Number(value);
+      if (!Number.isFinite(ms) || ms <= 0) return "now";
+      const date = new Date(ms);
+      if (Number.isNaN(date.getTime())) return "now";
+      return date.toLocaleString();
+    };
+
+    const fetchDevices = async ({ quiet = false } = {}) => {
+      const result = await apiFetch("GET", `/v1/private/devices?submitterId=${encodeURIComponent(state.submitterId)}`);
+      if (!result.ok) {
+        if (result.status === 404) {
+          state.paired = false;
+          state.devices = [];
+          state.spots = [];
+          renderDevices();
+          renderSpots();
+          syncActionState();
+          if (!quiet) setStatus(els.pairStatus, "This device is not paired yet.");
+          return false;
+        }
+        if (!quiet) setStatus(els.pairStatus, result.message || "Failed to load pair state.");
+        return false;
+      }
+      state.paired = true;
+      state.devices = Array.isArray(result?.data?.items) ? result.data.items : [];
+      renderDevices();
+      syncActionState();
+      if (!quiet) setStatus(els.pairStatus, "Pair state refreshed.");
+      return true;
+    };
+
+    const loadSpots = async ({ quiet = false } = {}) => {
+      const fileKey = getSelectedFileKey();
+      if (!state.paired || !fileKey) {
+        state.spots = [];
+        renderSpots();
+        return;
+      }
+      state.loadingSpots = true;
+      if (!quiet) els.spotsStatus.textContent = "Loading lake spots…";
+      const result = await apiFetch("GET", `/v1/private/spots?submitterId=${encodeURIComponent(state.submitterId)}&fileKey=${encodeURIComponent(fileKey)}`);
+      state.loadingSpots = false;
+      if (!result.ok) {
+        state.spots = [];
+        renderSpots();
+        if (!quiet) els.spotsStatus.textContent = result.message || "Failed to load spots.";
+        return;
+      }
+      state.spots = Array.isArray(result?.data?.items) ? result.data.items : [];
+      renderSpots();
+      if (!quiet) els.spotsStatus.textContent = `Loaded ${state.spots.length} spot${state.spots.length === 1 ? "" : "s"}.`;
+    };
+
+    const buildBasicSpotFromForm = () => {
+      const mapKey = state.selectedMapKey;
+      if (!mapKey) return { ok: false, message: "Select a lake first." };
+      const xGame = Number(els.editorX.value);
+      const yGame = Number(els.editorY.value);
+      if (!Number.isFinite(xGame) || !Number.isFinite(yGame)) {
+        return { ok: false, message: "Enter numeric map coordinates." };
+      }
+      const normalized = toNormalizedFromGameCoords(mapKey, xGame, yGame);
+      if (!normalized || normalized.x < 0 || normalized.x > 1 || normalized.y < 0 || normalized.y > 1) {
+        return { ok: false, message: "Coordinates are outside this lake's map bounds." };
+      }
+      const base = state.editingItem?.spot && typeof state.editingItem.spot === "object"
+        ? { ...state.editingItem.spot }
+        : {};
+      const nextId = String(base.id || createClientSpotId()).trim();
+      const next = {
+        ...base,
+        id: nextId,
+        type: "dot",
+        x: Number(normalized.x.toFixed(6)),
+        y: Number(normalized.y.toFixed(6)),
+        mapKey,
+        fish: String(els.editorFish.value || "").trim(),
+        spotType: String(els.editorType.value || "").trim(),
+        notes: String(els.editorNotes.value || "").trim()
+      };
+      if (!next.spotType) delete next.spotType;
+      if (!next.fish) delete next.fish;
+      if (!next.notes) delete next.notes;
+      return { ok: true, spot: next };
+    };
+
+    const createClientSpotId = () => {
+      const bytes = new Uint8Array(6);
+      crypto.getRandomValues(bytes);
+      const suffix = Array.from(bytes).map((b) => b.toString(16).padStart(2, "0")).join("");
+      return `mobile_${Date.now().toString(36)}_${suffix}`;
+    };
+
+    const refreshEditorFromSpot = (spot, { forceJson = false } = {}) => {
+      const working = spot && typeof spot === "object" ? { ...spot } : {};
+      const gameCoords = normalizeToGameCoords(working, state.selectedMapKey).split(":");
+      els.editorX.value = gameCoords[0] || "";
+      els.editorY.value = gameCoords[1] || "";
+      els.editorFish.value = String(working.fish || "").trim();
+      els.editorType.value = String(working.spotType || "").trim();
+      els.editorNotes.value = String(working.notes || "").trim();
+      els.editorJson.value = JSON.stringify(working, null, 2);
+      const advancedShape = String(working.type || "dot").trim().toLowerCase() !== "dot";
+      state.jsonMode = forceJson || advancedShape;
+      syncEditorMode();
+    };
+
+    const syncEditorMode = () => {
+      const isJson = !!state.jsonMode;
+      els.editorJsonToggle.classList.toggle("is-on", isJson);
+      els.editorJsonToggle.setAttribute("aria-pressed", isJson ? "true" : "false");
+      els.editorBasicFields.style.display = isJson ? "none" : "grid";
+      els.editorJsonFields.style.display = isJson ? "grid" : "none";
+      els.editorDelete.style.display = state.editingItem?.spotId ? "inline-flex" : "none";
+      const itemSpot = state.editingItem?.spot && typeof state.editingItem.spot === "object" ? state.editingItem.spot : null;
+      const advancedShape = String(itemSpot?.type || "dot").trim().toLowerCase() !== "dot";
+      els.editorBasicNote.textContent = advancedShape
+        ? "This spot uses advanced geometry. Basic mode is hidden until you switch back to a simple dot payload."
+        : "Basic mode saves a simple dot spot using the selected lake bounds. Existing advanced shapes can still be viewed and edited in JSON mode.";
+    };
+
+    const openEditor = (item = null) => {
+      state.editingItem = item;
+      els.editorTitle.textContent = item?.spotId ? "Edit Spot" : "Add Spot";
+      els.editorSubtitle.textContent = item?.spotId
+        ? "Update the selected lake spot. Save writes directly to the private sync API."
+        : "Create a new spot for the selected lake. Save writes directly to the private sync API.";
+      const nextSpot = item?.spot && typeof item.spot === "object"
+        ? { ...item.spot }
+        : {
+          id: createClientSpotId(),
+          type: "dot",
+          x: 0.5,
+          y: 0.5,
+          mapKey: state.selectedMapKey,
+          fish: "",
+          notes: ""
+        };
+      refreshEditorFromSpot(nextSpot);
+      els.editorJsonStatus.textContent = "Valid JSON is required in JSON mode.";
+      state.editorOpen = true;
+      els.editorBackdrop.classList.add("is-open");
+      els.editorBackdrop.setAttribute("aria-hidden", "false");
+    };
+
+    const closeEditor = () => {
+      state.editorOpen = false;
+      state.editingItem = null;
+      els.editorBackdrop.classList.remove("is-open");
+      els.editorBackdrop.setAttribute("aria-hidden", "true");
+    };
+
+    const saveEditorSpot = async () => {
+      if (!state.paired) {
+        els.editorJsonStatus.textContent = "Pair this device before saving spots.";
+        return;
+      }
+      const fileKey = getSelectedFileKey();
+      if (!fileKey) {
+        els.editorJsonStatus.textContent = "Select a lake first.";
+        return;
+      }
+      let nextSpot = null;
+      if (state.jsonMode) {
+        try {
+          nextSpot = JSON.parse(String(els.editorJson.value || "").trim() || "{}");
+        } catch {
+          els.editorJsonStatus.textContent = "JSON mode requires valid JSON.";
+          return;
+        }
+      } else {
+        const built = buildBasicSpotFromForm();
+        if (!built.ok) {
+          els.editorJsonStatus.textContent = built.message || "Failed to build spot.";
+          return;
+        }
+        nextSpot = built.spot;
+        els.editorJson.value = JSON.stringify(nextSpot, null, 2);
+      }
+      const payload = {
+        submitterId: state.submitterId,
+        fileKey,
+        spot: nextSpot
+      };
+      const isUpdate = !!String(state.editingItem?.spotId || "").trim();
+      const result = isUpdate
+        ? await apiFetch("POST", `/v1/private/spots/${encodeURIComponent(state.editingItem.spotId)}`, payload)
+        : await apiFetch("POST", "/v1/private/spots", payload);
+      if (!result.ok) {
+        els.editorJsonStatus.textContent = result.message || "Failed to save spot.";
+        return;
+      }
+      closeEditor();
+      await loadSpots({ quiet: true });
+      setStatus(els.spotsStatus, isUpdate ? "Spot updated." : "Spot added.");
+    };
+
+    const deleteSpot = async (item) => {
+      const spotId = String(item?.spotId || "").trim();
+      if (!spotId) return false;
+      const confirmed = window.confirm("Delete this synced spot?");
+      if (!confirmed) return false;
+      const result = await apiFetch("POST", `/v1/private/spots/${encodeURIComponent(spotId)}/delete`, {
+        submitterId: state.submitterId
+      });
+      if (!result.ok) {
+        setStatus(els.spotsStatus, result.message || "Failed to delete spot.");
+        return false;
+      }
+      await loadSpots({ quiet: true });
+      setStatus(els.spotsStatus, "Spot deleted.");
+      return true;
+    };
+
+    const loadMaps = async () => {
+      const [waterbodiesRes, boundsRes] = await Promise.all([
+        fetch("assets/data/waterbodies.json", { cache: "no-store" }),
+        fetch("assets/data/map-bounds.json", { cache: "no-store" })
+      ]);
+      const waterbodies = waterbodiesRes.ok ? await waterbodiesRes.json() : [];
+      const bounds = boundsRes.ok ? await boundsRes.json() : {};
+      state.maps = (Array.isArray(waterbodies) ? waterbodies : [])
+        .filter((row) => String(row?.mapKey || "").trim())
+        .map((row) => ({
+          name: String(row.name || row.mapKey || "").trim(),
+          mapKey: String(row.mapKey || "").trim(),
+          summary: String(row.summary || "").trim(),
+          heroImage: String(row.heroImage || "").trim()
+        }));
+      Object.entries(bounds && typeof bounds === "object" ? bounds : {}).forEach(([key, value]) => {
+        if (!value || typeof value !== "object") return;
+        state.boundsByMapKey.set(String(key || "").trim(), value);
+      });
+      const storedMapKey = String(localStorage.getItem(STORAGE_KEYS.mapKey) || "").trim();
+      state.selectedMapKey = state.maps.some((row) => row.mapKey === storedMapKey)
+        ? storedMapKey
+        : (state.maps[0]?.mapKey || "");
+      renderMapSelect();
+      renderMapHero();
+      syncActionState();
+    };
+
+    const setSelectedMap = async (mapKey) => {
+      state.selectedMapKey = String(mapKey || "").trim();
+      if (state.selectedMapKey) localStorage.setItem(STORAGE_KEYS.mapKey, state.selectedMapKey);
+      renderMapHero();
+      renderSpots();
+      await loadSpots();
+    };
+
+    const handlePairSubmit = async () => {
+      const rawCode = String(els.pairCodeInput.value || "").trim().toUpperCase();
+      if (!rawCode) {
+        setStatus(els.pairStatus, "Enter the desktop pair code first.");
+        return;
+      }
+      els.pairCodeSubmit.disabled = true;
+      const result = await apiFetch("POST", "/v1/private/pair/complete", {
+        submitterId: state.submitterId,
+        code: rawCode,
+        deviceLabel: "Castmark Mobile Web"
+      });
+      els.pairCodeSubmit.disabled = false;
+      if (!result.ok) {
+        setStatus(els.pairStatus, result.message || "Failed to pair device.");
+        return;
+      }
+      localStorage.setItem(STORAGE_KEYS.pairedAt, String(Date.now()));
+      els.pairCodeInput.value = "";
+      state.paired = true;
+      state.devices = Array.isArray(result?.data?.devices) ? result.data.devices : [];
+      renderDevices();
+      syncActionState();
+      await loadSpots({ quiet: true });
+      setStatus(els.pairStatus, "Device paired successfully.");
+      setStatus(els.spotsStatus, "Pair complete. Spots are ready.");
+    };
+
+    const handleResetDevice = () => {
+      const confirmed = window.confirm("Reset this device ID and local pairing state?");
+      if (!confirmed) return;
+      localStorage.removeItem(STORAGE_KEYS.submitterId);
+      localStorage.removeItem(STORAGE_KEYS.pairedAt);
+      state.submitterId = getSubmitterId();
+      state.paired = false;
+      state.devices = [];
+      state.spots = [];
+      renderDevices();
+      renderSpots();
+      syncActionState();
+      setStatus(els.pairStatus, "This device was reset. Pair again to access desktop spots.");
+    };
+
+    const bindEvents = () => {
+      els.pairCodeSubmit.addEventListener("click", handlePairSubmit);
+      els.refreshDevices.addEventListener("click", () => {
+        void fetchDevices();
+      });
+      els.copyDeviceId.addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText(state.submitterId);
+          setStatus(els.pairStatus, "Device ID copied.");
+        } catch {
+          setStatus(els.pairStatus, "Failed to copy device ID.");
+        }
+      });
+      els.saveApiBase.addEventListener("click", () => {
+        const next = setApiBase(els.apiBaseInput.value);
+        els.apiBaseInput.value = next;
+        setStatus(els.pairStatus, "API base saved.");
+      });
+      els.resetDevice.addEventListener("click", handleResetDevice);
+      els.mapSelect.addEventListener("change", () => {
+        void setSelectedMap(els.mapSelect.value);
+      });
+      els.refreshSpots.addEventListener("click", () => {
+        void loadSpots();
+      });
+      els.addSpot.addEventListener("click", () => {
+        openEditor(null);
+      });
+      els.editorClose.addEventListener("click", closeEditor);
+      els.editorCancel.addEventListener("click", closeEditor);
+      els.editorBackdrop.addEventListener("click", (event) => {
+        if (event.target === els.editorBackdrop) closeEditor();
+      });
+      els.editorJsonToggle.addEventListener("click", () => {
+        state.jsonMode = !state.jsonMode;
+        if (!state.jsonMode) {
+          const built = buildBasicSpotFromForm();
+          if (built.ok) {
+            els.editorJson.value = JSON.stringify(built.spot, null, 2);
+          }
+        }
+        syncEditorMode();
+      });
+      els.editorSave.addEventListener("click", () => {
+        void saveEditorSpot();
+      });
+      els.editorDelete.addEventListener("click", () => {
+        if (!state.editingItem) return;
+        void deleteSpot(state.editingItem).then((deleted) => {
+          if (deleted) closeEditor();
+        });
+      });
+      els.spotsList.addEventListener("click", (event) => {
+        const button = event.target instanceof HTMLElement ? event.target.closest("[data-spot-action]") : null;
+        if (!(button instanceof HTMLElement)) return;
+        const action = String(button.dataset.spotAction || "").trim();
+        const spotId = String(button.dataset.spotId || "").trim();
+        const item = state.spots.find((entry) => String(entry?.spotId || "").trim() === spotId) || null;
+        if (!item) return;
+        if (action === "edit") {
+          openEditor(item);
+          return;
+        }
+        if (action === "delete") {
+          void deleteSpot(item);
+        }
+      });
+      window.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && state.editorOpen) closeEditor();
+      });
+    };
+
+    const init = async () => {
+      state.submitterId = getSubmitterId();
+      els.apiBaseInput.value = getApiBase();
+      await loadMaps();
+      renderDevices();
+      renderSpots();
+      syncActionState();
+      bindEvents();
+      await fetchDevices({ quiet: true });
+      await loadSpots({ quiet: true });
+    };
+
+    void init();
+  </script>
+</body>
+</html>
