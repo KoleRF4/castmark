@@ -22,9 +22,7 @@
 
     body.mobile-page {
       min-height: 100vh;
-      background:
-        radial-gradient(720px 320px at 82% 18%, color-mix(in srgb, var(--accent-glow-soft) 26%, transparent) 0%, transparent 74%),
-        linear-gradient(180deg, #19181c 0%, #131216 56%, #0f0e12 100%);
+      background: linear-gradient(180deg, var(--overlay-top) 0%, var(--overlay-bottom) 100%);
       overflow-x: hidden;
       overflow-y: auto;
     }
@@ -46,9 +44,7 @@
       content: "";
       position: absolute;
       inset: 0;
-      background:
-        radial-gradient(320px 180px at 100% 0%, color-mix(in srgb, var(--accent-glow-soft) 20%, transparent) 0%, transparent 74%),
-        linear-gradient(135deg, transparent 0%, color-mix(in srgb, #ffffff 2%, transparent) 100%);
+      background: linear-gradient(135deg, transparent 0%, color-mix(in srgb, #ffffff 3%, transparent) 100%);
       pointer-events: none;
     }
 
@@ -250,7 +246,7 @@
       border: 1px solid color-mix(in srgb, var(--border) 82%, transparent);
       background:
         linear-gradient(180deg, rgba(8, 8, 12, 0.16), rgba(8, 8, 12, 0.72)),
-        linear-gradient(180deg, color-mix(in srgb, var(--bg-panel-2) 92%, #0a0a0d 8%) 0%, color-mix(in srgb, var(--bg) 96%, #000000 4%) 100%);
+        linear-gradient(180deg, var(--bg-panel-2) 0%, var(--bg-panel) 100%);
       background-position: center;
       background-size: cover;
       display: flex;
@@ -533,12 +529,6 @@
       gap: 8px;
     }
 
-    .mobile-page .ui-card {
-      background: var(--bg-panel);
-      border-color: color-mix(in srgb, var(--border) 88%, transparent);
-      box-shadow: var(--surface-shadow-sm);
-    }
-
     .mobile-page .ui-btn {
       min-height: 36px;
     }
@@ -581,7 +571,7 @@
         </div>
         <div class="mobile-badge-row">
           <span class="ui-badge">No Login</span>
-          <span class="ui-badge ui-badge--accent">Private Spots</span>
+          <span class="ui-badge">Private Spots</span>
           <span class="ui-badge">Phone + Desktop</span>
         </div>
       </div>
