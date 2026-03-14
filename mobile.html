@@ -37,6 +37,12 @@
       --ui-card-border: #272727;
       --ui-input-bg: #0f0f0f;
       --ui-input-border: #272727;
+      --accent: #fafafa;
+      --accent-strong: #ffffff;
+      --active-fg: #ffffff;
+      --on-accent: #181818;
+      --accent-glow: rgba(250, 250, 250, 0.2);
+      --accent-glow-soft: rgba(250, 250, 250, 0.1);
       --ui-btn-surface-bg: #151515;
       --ui-btn-surface-border: #272727;
       --ui-btn-surface-fg: #fafafa;
@@ -475,6 +481,7 @@
       font-size: 20px;
       font-family: "Sora", var(--ui-font-family), sans-serif;
       letter-spacing: -0.04em;
+      color: var(--text);
     }
 
     .mobile-sheet-subtitle {
@@ -799,6 +806,26 @@
       mapKey: "castmarkMobileMapKey",
       pairedAt: "castmarkMobilePairedAt"
     };
+    const MAP_CASTMARK_HERO_PATHS = {
+      akhtuba_river: "assets/img/maps/Akhtuba_River_Map_Castmark.png",
+      bear_lake: "assets/img/maps/Bear_Lake_Map_Castmark.png",
+      belaya_river: "assets/img/maps/Belaya_River_Map_Castmark.png",
+      copper_lake: "assets/img/maps/Copper_Lake_Map_Castmark.png",
+      elk_lake: "assets/img/maps/Elk_Lake_Map_Castmark.png",
+      kuori_lake: "assets/img/maps/Kuori_Lake_Map_Castmark.png",
+      ladoga_archipelago: "assets/img/maps/Ladoga_Archipelago_Map_Castmark.png",
+      ladoga_lake: "assets/img/maps/Ladoga_Lake_Map_Castmark.png",
+      lower_tunguska_river: "assets/img/maps/Lower_Tunguska_River_Map_Castmark.png",
+      mosquito_lake: "assets/img/maps/Mosquito_Lake_Map_Castmark.png",
+      norwegian_sea: "assets/img/maps/Norwegian_Sea_Map_Castmark.png",
+      old_burg_lake: "assets/img/maps/Old_Burg_Lake_Map_Castmark.png",
+      seversky_donets_river: "assets/img/maps/Seversky_Donets_River_Map_Castmark.png",
+      sura_river: "assets/img/maps/Sura_River_Map_Castmark.png",
+      the_amber_lake: "assets/img/maps/The_Amber_Lake_Map_Castmark.png",
+      volkhov_river: "assets/img/maps/Volkhov_River_Map_Castmark.png",
+      winding_rivulet: "assets/img/maps/Winding_Rivulet_Map_Castmark.png",
+      yama_river: "assets/img/maps/Yama_River_Map_Castmark.png"
+    };
 
     const state = {
       submitterId: "",
@@ -1046,7 +1073,12 @@
       const safeMapKey = String(mapKey || "").trim();
       if (!safeMapKey) return null;
       const catalogMatch = state.catalogMaps.find((row) => row.mapKey === safeMapKey);
-      if (catalogMatch) return { ...catalogMatch };
+      if (catalogMatch) {
+        return {
+          ...catalogMatch,
+          heroImage: MAP_CASTMARK_HERO_PATHS[safeMapKey] || String(catalogMatch.heroImage || "").trim()
+        };
+      }
       const label = safeMapKey
         .replace(/_/g, " ")
         .replace(/\b\w/g, (char) => char.toUpperCase());
@@ -1054,7 +1086,7 @@
         name: label || safeMapKey,
         mapKey: safeMapKey,
         summary: "",
-        heroImage: ""
+        heroImage: MAP_CASTMARK_HERO_PATHS[safeMapKey] || ""
       };
     };
 
@@ -1555,7 +1587,7 @@
           name: String(row.name || row.mapKey || "").trim(),
           mapKey: String(row.mapKey || "").trim(),
           summary: String(row.summary || "").trim(),
-          heroImage: String(row.heroImage || "").trim()
+          heroImage: MAP_CASTMARK_HERO_PATHS[String(row.mapKey || "").trim()] || String(row.heroImage || "").trim()
         }));
       Object.entries(bounds && typeof bounds === "object" ? bounds : {}).forEach(([key, value]) => {
         if (!value || typeof value !== "object") return;
